@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.weilai</groupId>
+    <artifactId>weilai-wisark</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>weilai-wisark-common</module>
+        <module>weilai-wisark-service</module>
+        <module>weilai-wisark-gateway</module>
+        <module>weilai-wisark-feign-api</module>
+        <module>weilai-wisark-model</module>
+        <module>weilai-wisark-test</module>
+        <module>weilai-wisark-utils</module>
+        <module>weilai-wisark-starter</module>
+    </modules>
+
+    <!-- 继承springboot工程   -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+    </parent>
+
+
+    <properties>
+        <!-- 项目编译JDK版本 -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <!-- 项目源码及编译输出的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!--项目依赖包管理   -->
+        <spring.boot.version>3.3.4</spring.boot.version>
+        <lombok.version>1.18.24</lombok.version>
+        <mysql.version>8.0.14</mysql.version>
+        <mybatis.version>3.5.19</mybatis.version>
+        <mybatis.spring.version>3.0.5</mybatis.spring.version>
+        <mybatis.plus.version>3.5.12</mybatis.plus.version>
+        <spring.cloud.version>2023.0.3</spring.cloud.version>
+        <spring.cloud.alibaba>2023.0.3.2</spring.cloud.alibaba>
+        <swagger.version>3.0.0</swagger.version>
+        <spring.cloud.bootstrap>4.0.1</spring.cloud.bootstrap>
+        <knife4j.version>2.0.2</knife4j.version>
+        <spring.boot.web.version>3.2.0</spring.boot.web.version>
+        <commons.lang3.version>3.18.0</commons.lang3.version>
+        <hutool.core.version>5.8.37</hutool.core.version>
+
+
+    </properties>
+
+    <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+      <dependencies>
+          <!--  内部依赖        -->
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-common</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-model</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-common</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-utils</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-feign-api</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-test</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-service</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+
+
+          <!-- Mysql 数据库 -->
+          <dependency>
+              <groupId>mysql</groupId>
+              <artifactId>mysql-connector-java</artifactId>
+              <version>${mysql.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.mybatis</groupId>
+              <artifactId>mybatis</artifactId>
+              <version>${mybatis.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.mybatis</groupId>
+              <artifactId>mybatis-spring</artifactId>
+              <version>${mybatis.spring.version}</version>
+          </dependency>
+          <!--  mp起步依赖        -->
+          <dependency>
+              <groupId>com.baomidou</groupId>
+              <artifactId>mybatis-plus-boot-starter</artifactId>
+              <version>${mybatis.plus.version}</version>
+          </dependency>
+          <!-- springCloud   必须加上type和scope -->
+          <dependency>
+              <groupId>org.springframework.cloud</groupId>
+              <artifactId>spring-cloud-dependencies</artifactId>
+              <version>${spring.cloud.version}</version>
+              <type>pom</type>
+              <scope>import</scope>
+          </dependency>
+          <!-- spring-cloud-alibaba -->
+          <dependency>
+              <groupId>com.alibaba.cloud</groupId>
+              <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+              <version>${spring.cloud.alibaba}</version>
+              <type>pom</type>
+              <scope>import</scope>
+          </dependency>
+        <!-- swagger依赖         -->
+          <dependency>
+              <groupId>io.springfox</groupId>
+              <artifactId>springfox-swagger2</artifactId>
+              <version>${swagger.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>io.springfox</groupId>
+              <artifactId>springfox-swagger-ui</artifactId>
+              <version>${swagger.version}</version>
+          </dependency>
+
+          <dependency>
+              <groupId>com.github.xiaoymin</groupId>
+              <artifactId>knife4j-spring-boot-starter</artifactId>
+              <version>${knife4j.version}</version>
+          </dependency>
+
+
+          <!--  读取bootstrap文件  -->
+          <dependency>
+              <groupId>org.springframework.cloud</groupId>
+              <artifactId>spring-cloud-starter-bootstrap</artifactId>
+              <version>${spring.cloud.bootstrap}</version>
+          </dependency>
+
+          <!-- springboot web依赖 -->
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-web</artifactId>
+              <version>${spring.boot.web.version}</version>
+          </dependency>
+
+          <!-- 工具包 -->
+          <dependency>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-lang3</artifactId>
+              <version>${commons-lang3.version}</version>
+          </dependency>
+
+          <dependency>
+              <groupId>cn.hutool</groupId>
+              <artifactId>hutool-core</artifactId>
+              <version>${hutool.core.version}</version>
+          </dependency>
+
+
+
+      </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

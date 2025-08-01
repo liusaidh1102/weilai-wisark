@@ -1,0 +1,33 @@
+server:
+  port: 8118
+spring:
+  config:
+    import: nacos:weilai-wisark-user.yaml
+
+  application:
+    # 该name属性和值，必须与nacos中配置的Data ID一致
+    name: weilai-wisark-user
+  # nacos注册
+  cloud:
+    nacos:
+      # 数据库连接、业务参数
+      discovery:
+        group: DEFAULT_GROUP
+        server-addr: 47.121.196.50:8848
+      config:
+        server-addr: 47.121.196.50:8848
+        file-extension: yaml # 文件后缀名
+        group: DEFAULT_GROUP
+
+
+wisark:
+  db:
+    host: 47.121.196.50
+    port: 3306
+    database: weilai_wisark_user
+    username: root
+    password: wisark@2025
+  swagger:
+    title: 用户微服务
+    description: 用户微服务接口文档
+    package: com.weilai.user.controller

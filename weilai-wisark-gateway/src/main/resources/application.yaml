@@ -1,0 +1,18 @@
+server:
+  # 前端请求8080
+  port: 8080
+
+spring:
+  # 配置解决cloud20221.0.5开始不使用bootstrap的问题
+  config:
+    import: nacos:weilai-wisark-gateway.yaml
+  cloud:
+    # nacos服务注册
+    nacos:
+      discovery:
+        server-addr: 47.121.196.50:8848
+        group: DEFAULT_GROUP
+      config:
+        server-addr: 47.121.196.50:8848
+        group: DEFAULT_GROUP
+        file-extension: yaml

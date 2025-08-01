@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.weilai</groupId>
+        <artifactId>weilai-wisark</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>weilai-wisark-service</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <!--   子模块     -->
+        <module>weilai-wisark-user</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- 引入 common 模块 -->
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-feign-api</artifactId>
+        </dependency>
+
+        <!-- model模块中有mysql和mp相关依赖，依赖传递，这里不用再引入 -->
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-model</artifactId>
+        </dependency>
+
+        <!-- Spring boot starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+        <!--  引入 Nacos Discovery 进行服务注册/发现     -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- 引入Nacos Config进行配置 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!--  远程调用feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 负载均衡，早期用ribbon，现在用loadbalance -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+<!--        &lt;!&ndash; 引入spring cloud 的 bootstrap依赖 &ndash;&gt;-->
+<!--        &lt;!&ndash; SpringBoot3+Nacos Config做配置中心时，-->
+<!--        No spring.config.import property has been defined的问题 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->
+<!--        </dependency>-->
+
+
+
+    </dependencies>
+
+
+
+
+</project>
