@@ -3,6 +3,9 @@ server:
   port: 8080
 
 spring:
+  # 排除gateway下的webmvc
+  main:
+    web-application-type: reactive
   # 配置解决cloud20221.0.5开始不使用bootstrap的问题
   config:
     import: nacos:weilai-wisark-gateway.yaml
@@ -16,3 +19,12 @@ spring:
         server-addr: 47.121.196.50:8848
         group: DEFAULT_GROUP
         file-extension: yaml
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    groups-order: DESC
+#  gateway:
+#    enabled: false
+#    paths-to-match: /**

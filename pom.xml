@@ -44,12 +44,13 @@
         <mybatis.plus.version>3.5.12</mybatis.plus.version>
         <spring.cloud.version>2023.0.3</spring.cloud.version>
         <spring.cloud.alibaba>2023.0.3.2</spring.cloud.alibaba>
-        <swagger.version>3.0.0</swagger.version>
         <spring.cloud.bootstrap>4.0.1</spring.cloud.bootstrap>
-        <knife4j.version>2.0.2</knife4j.version>
         <spring.boot.web.version>3.2.0</spring.boot.web.version>
         <commons.lang3.version>3.18.0</commons.lang3.version>
         <hutool.core.version>5.8.37</hutool.core.version>
+        <springdoc.version>2.2.0</springdoc.version>
+        <springdoc.webflux.version>2.1.0</springdoc.webflux.version>
+
 
 
     </properties>
@@ -142,23 +143,6 @@
               <type>pom</type>
               <scope>import</scope>
           </dependency>
-        <!-- swagger依赖         -->
-          <dependency>
-              <groupId>io.springfox</groupId>
-              <artifactId>springfox-swagger2</artifactId>
-              <version>${swagger.version}</version>
-          </dependency>
-          <dependency>
-              <groupId>io.springfox</groupId>
-              <artifactId>springfox-swagger-ui</artifactId>
-              <version>${swagger.version}</version>
-          </dependency>
-
-          <dependency>
-              <groupId>com.github.xiaoymin</groupId>
-              <artifactId>knife4j-spring-boot-starter</artifactId>
-              <version>${knife4j.version}</version>
-          </dependency>
 
 
           <!--  读取bootstrap文件  -->
@@ -186,6 +170,35 @@
               <groupId>cn.hutool</groupId>
               <artifactId>hutool-core</artifactId>
               <version>${hutool.core.version}</version>
+          </dependency>
+
+          <!--     swagger依赖   -->
+          <dependency>
+              <groupId>org.springdoc</groupId>
+              <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+              <version>${springdoc.version}</version>
+          </dependency>
+
+          <dependency>
+              <groupId>org.springdoc</groupId>
+              <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+              <version>${springdoc.version}</version>
+          </dependency>
+
+
+
+          <!-- SpringDoc Gateway 聚合依赖 -->
+          <dependency>
+              <groupId>org.springdoc</groupId>
+              <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
+              <version>${springdoc.webflux.version}</version>
+          </dependency>
+
+          <!-- SpringDoc OpenAPI -->
+          <dependency>
+              <groupId>org.springdoc</groupId>
+              <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+              <version>${springdoc.webflux.version}</version>
           </dependency>
 
 

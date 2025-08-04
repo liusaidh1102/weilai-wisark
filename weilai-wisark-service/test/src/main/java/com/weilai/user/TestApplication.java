@@ -1,13 +1,17 @@
 package com.weilai.user;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan({"com.weilai.user.mapper"})
-public class UserApplication {
+@MapperScan({ "com.weilai.user.mapper"})
+public class TestApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UserApplication.class, args);
+        SpringApplication.run(TestApplication.class, args);
     }
 }

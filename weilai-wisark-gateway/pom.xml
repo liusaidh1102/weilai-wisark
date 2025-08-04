@@ -22,13 +22,14 @@
        <dependency>
            <groupId>com.weilai</groupId>
            <artifactId>weilai-wisark-common</artifactId>
-           <exclusions>
-               <exclusion>
-                   <groupId>org.springframework.boot</groupId>
-                   <artifactId>spring-boot-starter-web</artifactId>
-               </exclusion>
-           </exclusions>
+<!--           <exclusions>-->
+<!--               <exclusion>-->
+<!--                   <groupId>org.springframework.boot</groupId>-->
+<!--                   <artifactId>spring-boot-starter-web</artifactId>-->
+<!--               </exclusion>-->
+<!--           </exclusions>-->
        </dependency>
+
 
        <!-- SpringCloud Gateway -->
        <dependency>
@@ -53,6 +54,21 @@
            <groupId>org.springframework.cloud</groupId>
            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
        </dependency>
+
+
+       <!-- SpringDoc Gateway 聚合依赖 -->
+       <dependency>
+           <groupId>org.springdoc</groupId>
+           <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
+       </dependency>
+
+       <!-- SpringDoc OpenAPI -->
+       <dependency>
+           <groupId>org.springdoc</groupId>
+           <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+       </dependency>
+
+
 
 
    </dependencies>

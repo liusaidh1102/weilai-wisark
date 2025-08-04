@@ -1,12 +1,13 @@
 server:
-  port: 8118
+  port: 8119
 spring:
   config:
-    import: nacos:weilai-wisark-user.yaml
+    import:
+      - nacos:weilai-wisark-test.yaml
 
   application:
     # 该name属性和值，必须与nacos中配置的Data ID一致
-    name: weilai-wisark-user
+    name: weilai-wisark-test
   # nacos注册
   cloud:
     nacos:
@@ -18,14 +19,14 @@ spring:
         server-addr: 47.121.196.50:8848
         file-extension: yaml # 文件后缀名
         group: DEFAULT_GROUP
+
 springdoc:
   api-docs:
     enabled: true # 开启OpenApi接口
-    path: /v3/api-docs/weilai-wisark-user # 自定义路径，默认为 "/v3/api-docs"
+    path: /v3/api-docs/weilai-wisark-test  # 自定义路径，默认为 "/v3/api-docs"
   swagger-ui:
     enabled: true # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
     path: /swagger-ui/index.html # 自定义路径，默认为"/swagger-ui/index.html"
-# swagger配置
 swagger:
   title: "测试"
   desc: "测试"

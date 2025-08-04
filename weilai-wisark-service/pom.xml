@@ -14,6 +14,7 @@
     <modules>
         <!--   子模块     -->
         <module>weilai-wisark-user</module>
+        <module>test</module>
     </modules>
 
     <properties>
@@ -70,20 +71,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
-
-<!--        &lt;!&ndash; 引入spring cloud 的 bootstrap依赖 &ndash;&gt;-->
-<!--        &lt;!&ndash; SpringBoot3+Nacos Config做配置中心时，-->
-<!--        No spring.config.import property has been defined的问题 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->
-<!--        </dependency>-->
-
-
-
     </dependencies>
-
-
-
 
 </project>

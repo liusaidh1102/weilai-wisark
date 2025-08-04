@@ -1,4 +1,4 @@
+# spingboot3 no use
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.weilai.common.config.SwaggerConfiguration,\
-  com.weilai.common.config.Knife4jConfiguration,\
-  com.weilai.common.config.MvcConfiguration
+  com.weilai.common.config.MvcConfig ,\
+  com.weilai.common.config.CorsConfig
