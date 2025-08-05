@@ -1,14 +1,13 @@
 package com.weilai.model.user.dos;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
 * 系统权限表（所有可操作权限点）
 * @TableName tb_sys_permission
@@ -25,7 +24,7 @@ public class SysPermission implements Serializable {
     /**
     * 权限编码（唯一标识，如"resource:upload"）
     */
-    @NotBlank(message="[权限编码（唯一标识，如"resource:upload"）]不能为空")
+    @NotBlank(message="[权限编码（唯一标识，如resource:upload）]不能为空")
     @Size(max= 100,message="编码长度不能超过100")
     @Length(max= 100,message="编码长度不能超过100")
     private String permissionCode;
