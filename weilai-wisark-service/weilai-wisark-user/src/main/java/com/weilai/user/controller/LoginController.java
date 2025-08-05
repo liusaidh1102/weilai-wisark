@@ -3,10 +3,11 @@ import com.weilai.common.response.Result;
 import com.weilai.user.service.UserService;
 import com.weilai.model.user.dos.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import javax.annotation.Resource;
+
 @RestController
 @Tag(name = "", description = "登录接口")
 public class LoginController {
