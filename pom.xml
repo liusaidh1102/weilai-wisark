@@ -50,6 +50,7 @@
         <hutool.core.version>5.8.37</hutool.core.version>
         <springdoc.version>2.2.0</springdoc.version>
         <springdoc.webflux.version>2.1.0</springdoc.webflux.version>
+        <hibernate.version>6.0.1.Final</hibernate.version>
 
 
 
@@ -200,6 +201,13 @@
               <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
               <version>${springdoc.webflux.version}</version>
           </dependency>
+
+          <dependency>
+              <groupId>org.hibernate</groupId>
+              <artifactId>hibernate-validator</artifactId>
+              <version>${hibernate.version}</version>
+          </dependency>
+
 
 
 

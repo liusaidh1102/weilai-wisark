@@ -18,6 +18,18 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+
         <!-- mp 依赖 -->
         <dependency>
             <groupId>com.baomidou</groupId>
