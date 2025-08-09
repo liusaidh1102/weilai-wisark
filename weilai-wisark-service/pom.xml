@@ -15,6 +15,7 @@
         <!--   子模块     -->
         <module>weilai-wisark-user</module>
         <module>test</module>
+        <module>weilai-wisark-ai</module>
     </modules>
 
     <properties>
