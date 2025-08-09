@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -24,6 +26,7 @@ public class UserThirdAccount implements Serializable {
      */
     @NotNull (message = "[主键] 不能为空")
     @Schema (description = "记录唯一标识（主键）")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
      关联的用户 ID（关联 user 表 id）

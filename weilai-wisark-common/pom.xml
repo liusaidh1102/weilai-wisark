@@ -51,6 +51,18 @@
             <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
         </dependency>
 
+        <!--  腾讯云发短信      -->
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+        </dependency>
+
+        <!--邮箱登录的依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
 
 
     </dependencies>

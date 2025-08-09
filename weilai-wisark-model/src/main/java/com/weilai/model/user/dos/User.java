@@ -1,6 +1,9 @@
 package com.weilai.model.user.dos;
 import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -10,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
 * 用户基础信息表
 * @TableName tb_user
@@ -30,6 +35,7 @@ public class User implements Serializable {
     */
     @NotNull(message = "[用户唯一ID（雪花算法生成）]不能为空")
     @Schema(description = "用户唯一ID（雪花算法生成）")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
     * 加密后的密码（如BCrypt加密，可以为空，最开始通过第三方登录）
@@ -84,13 +90,15 @@ public class User implements Serializable {
     */
     @NotNull(message="[创建时间]不能为空")
     @Schema(description = "创建时间")
-    private DateTime createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
     /**
     * 更新时间
     */
     @NotNull(message="[更新时间]不能为空")
     @Schema(description = "更新时间")
-    private DateTime updateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime updateTime;
 
 
 }

@@ -2,9 +2,12 @@ package com.weilai.model.user.dos;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -24,6 +27,7 @@ public class UserProfile implements Serializable {
      */
     @NotNull(message="[主键（与tb_user.id一致，避免冗余）]不能为空")
     @Schema(description = "主键（与tb_user.id一致，避免冗余）", example = "123456789012345678")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
@@ -75,7 +79,7 @@ public class UserProfile implements Serializable {
      */
     @NotNull(message="[更新时间]不能为空")
     @Schema(description = "信息更新时间", example = "2023-10-01T12:00:00")
-    private DateTime updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 个人主页背景图片URL
