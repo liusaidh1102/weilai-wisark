@@ -1,0 +1,10 @@
+server:
+  port: 8115
+minio:
+  secret-key: wisark@2025
+  access-key: weilai
+  bucket-name: wlgzs-official-website
+  endpoint: http://47.121.196.50:9000
+logging:
+  level:
+    com.weilai.file: debug

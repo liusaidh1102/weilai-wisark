@@ -51,6 +51,8 @@
         <springdoc.version>2.2.0</springdoc.version>
         <springdoc.webflux.version>2.1.0</springdoc.webflux.version>
         <hibernate.version>6.0.1.Final</hibernate.version>
+        <sa-token.version>1.44.0</sa-token.version>
+        <tencentcloud.version>3.1.1000</tencentcloud.version>
 
 
 
@@ -202,13 +204,28 @@
               <version>${springdoc.webflux.version}</version>
           </dependency>
 
+          <!-- 参数校验 -->
           <dependency>
               <groupId>org.hibernate</groupId>
               <artifactId>hibernate-validator</artifactId>
               <version>${hibernate.version}</version>
           </dependency>
 
+          <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+          <dependency>
+              <groupId>cn.dev33</groupId>
+              <artifactId>sa-token-spring-boot3-starter</artifactId>
+              <version>${sa-token.version}</version>
+          </dependency>
 
+          <!--  腾讯云发短信      -->
+          <dependency>
+              <groupId>com.tencentcloudapi</groupId>
+              <artifactId>tencentcloud-sdk-java</artifactId>
+              <!-- 如 CVM 产品包：tencentcloud-sdk-java-cvm -->
+              <!-- 请到 maven 官网查询 sdk 的所有版本，例如 cvm 的产品包链接为 https://central.sonatype.com/artifact/com.tencentcloudapi/tencentcloud-sdk-java-cvm/versions -->
+              <version>${tencentcloud.version}</version>
+          </dependency>
 
 
       </dependencies>

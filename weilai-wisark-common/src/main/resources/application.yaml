@@ -1,0 +1,30 @@
+sms:
+  # 腾讯云账号的密钥
+  secretId: AKIDQgniQuDKEvNgnz3ua6RaWEPQXKwMZZO3
+  secretKey: VovscAYijapsrhJm3jFYeZcow2xgC3sd
+  # 支持的地域信息
+  region: ap-guangzhou
+  # 短信应用ID
+  sdkAppId: 1401023148
+  # 短信签名
+  signName:
+  # 模板 ID
+  templateId:
+
+# 邮箱服务
+spring:
+  mail:
+    host: smtp.163.com
+    port: 465
+    password: FOAPSFOUQBZBYMXN
+    username: wkldzwq@163.com
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          enable: true
+          from: wkldzwq@163.com
+          ssl:
+            enable: true
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory

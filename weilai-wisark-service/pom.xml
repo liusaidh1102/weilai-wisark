@@ -17,6 +17,7 @@
         <module>test</module>
         <module>weilai-wisark-topic</module>
         <module>weilai-wisark-streaming</module>
+        <module>weilai-wisark-ai</module>
     </modules>
 
     <properties>

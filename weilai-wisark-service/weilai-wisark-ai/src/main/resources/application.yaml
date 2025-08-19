@@ -1,0 +1,37 @@
+server:
+  port: 8116
+spring:
+  config:
+    import: nacos:weilai-wisark-ai.yaml
+
+  application:
+    # 该name属性和值，必须与nacos中配置的Data ID一致
+    name: weilai-wisark-ai
+  # nacos注册
+  cloud:
+    nacos:
+      # 数据库连接、业务参数
+      discovery:
+        group: DEFAULT_GROUP
+        server-addr: 47.121.196.50:8848
+      config:
+        server-addr: 47.121.196.50:8848
+        file-extension: yaml # 文件后缀名
+        group: DEFAULT_GROUP
+springdoc:
+  api-docs:
+    enabled: true # 开启OpenApi接口
+    path: /v3/api-docs/weilai-wisark-ai # 自定义路径，默认为 "/v3/api-docs"
+  swagger-ui:
+    enabled: true # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
+    path: /swagger-ui/index.html # 自定义路径，默认为"/swagger-ui/index.html"
+# swagger配置
+swagger:
+  title: "ai服务接口"
+  desc: "ai相关内容"
+  version: "1.0.0"
+  external-desc: 外部文档
+  external-url: #
+logging:
+  level:
+    com.weilai.ai: debug

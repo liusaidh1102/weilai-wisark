@@ -1,6 +1,9 @@
 package com.weilai.common.response;
 import lombok.Data;
 import java.io.Serializable;
+
+import static com.weilai.common.response.CodeEnum.SUCCESS;
+
 /**
  * 统一返回结果
  */
@@ -19,11 +22,11 @@ public class Result<T> implements Serializable {
 
 
     public static <T> Result<T> ok() {
-        return Result.ok(CodeEnum.SUCCESS);
+        return Result.ok(SUCCESS);
     }
 
     public static <T> Result<T> ok(T data) {
-        return Result.ok(CodeEnum.SUCCESS,data);
+        return Result.ok(SUCCESS,data);
     }
 
     public static <T> Result<T> ok(CodeEnum codeEnum) {
@@ -34,9 +37,6 @@ public class Result<T> implements Serializable {
         return new Result<>(codeEnum.getCode(),codeEnum.getMsg(),data);
     }
 
-    public static <T> Result<T> ok(String msg) {
-        return new Result<>(CodeEnum.SUCCESS.getCode(),msg,null);
-    }
 
     public static <T> Result<T> fail() {
         return Result.ok(CodeEnum.INTERNAL_SERVER_ERROR);
