@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @TableName("collection")
 @Schema(description = "文章收藏表")
-public class Collection implements Serializable {
+public class CollectionTopic implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

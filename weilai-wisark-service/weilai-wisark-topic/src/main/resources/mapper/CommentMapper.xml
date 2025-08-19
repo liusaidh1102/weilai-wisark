@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilai.topic.mapper.CommentMapper">
+
+    <resultMap type="com.weilai.model.topic.dos.Comment" id="CommentMap">
+        <id property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="atUserId" column="at_user_id"/>
+        <result property="content" column="content"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="isSelection" column="is_selection"/>
+        <result property="isHot" column="is_hot"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="deletedAt" column="deleted_at"/>
+    </resultMap>
+
+    <!-- 添加评论 -->
+    <insert id="insert" parameterType="com.weilai.model.topic.dos.Comment">
+        INSERT INTO `comment`(article_id, user_id, parent_id, at_user_id, content, like_count, is_selection, is_hot, created_at, updated_at)
+        VALUES (#{articleId}, #{userId}, #{parentId}, #{atUserId}, #{content}, #{likeCount}, #{isSelection}, #{isHot}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 根据文章ID查询评论 -->
+    <select id="selectList" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="CommentMap">
+        SELECT * FROM `comment`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <!-- 更新评论 -->
+    <update id="updateById" parameterType="com.weilai.model.topic.dos.Comment">
+        UPDATE `comment`
+        <set>
+            <if test="articleId != null">
+                article_id = #{articleId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="atUserId != null">
+                at_user_id = #{atUserId},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="likeCount != null">
+                like_count = #{likeCount},
+            </if>
+            <if test="isSelection != null">
+                is_selection = #{isSelection},
+            </if>
+            <if test="isHot != null">
+                is_hot = #{isHot},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

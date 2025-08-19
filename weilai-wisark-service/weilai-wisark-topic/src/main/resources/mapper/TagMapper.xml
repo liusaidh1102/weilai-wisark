@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilai.topic.mapper.TagMapper">
+
+    <resultMap type="com.weilai.model.topic.dos.TagTopic" id="TagMap">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="sort" column="sort"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="deletedAt" column="deleted_at"/>
+    </resultMap>
+
+    <!-- 添加标签 -->
+    <insert id="insert" parameterType="com.weilai.model.topic.dos.TagTopic">
+        INSERT INTO `tag`(name, parent_id, sort, created_at, updated_at)
+        VALUES (#{name}, #{parentId}, #{sort}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 根据条件查询标签 -->
+    <select id="selectList" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="TagMap">
+        SELECT * FROM `tag`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    
+    <!-- 根据条件查询单个标签 -->
+    <select id="selectOne" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="TagMap">
+        SELECT * FROM `tag`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 更新标签 -->
+    <update id="updateById" parameterType="com.weilai.model.topic.dos.TagTopic">
+        UPDATE `tag`
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>
