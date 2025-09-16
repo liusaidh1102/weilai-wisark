@@ -1,6 +1,8 @@
 package com.weilai.topic.service;
 
 import com.weilai.model.topic.dos.Article;
+import com.weilai.model.topic.dtos.PublishArticleDTO;
+import com.weilai.model.topic.vos.ArticleVO;
 
 import java.util.List;
 
@@ -22,21 +24,22 @@ public interface ArticleService {
      * @param id 文章ID
      * @return 文章详情
      */
-    Article getArticleById(Long id);
+    ArticleVO getArticleById(Long id);
 
     /**
      * 添加文章
      *
      * @param article 文章信息
+     * @return
      */
-    void addArticle(Article article);
+    Long addArticle(PublishArticleDTO article);
 
     /**
      * 更新文章
      *
      * @param article 文章信息
      */
-    void updateArticle(Article article);
+    void updateArticle(PublishArticleDTO article);
 
     /**
      * 删除文章

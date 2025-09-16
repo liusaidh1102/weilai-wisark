@@ -33,12 +33,14 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
     }
 
     @Override
-    public void addArticleTag(ArticleTag articleTag) {
-        articleTagMapper.insert(articleTag);
+    public void addOrUpdateArticleTag(ArticleTag articleTag) {
+        articleTagMapper.insertOrUpdate(articleTag);
     }
 
     @Override
-    public void deleteArticleTag(Long id) {
-        articleTagMapper.deleteById(id);
+    public boolean deleteArticleTag(Long articleId) {
+        QueryWrapper<ArticleTag> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("article_id", articleId);
+        return articleTagMapper.delete(queryWrapper)>0;
     }
 }

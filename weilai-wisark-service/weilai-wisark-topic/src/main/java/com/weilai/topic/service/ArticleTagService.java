@@ -29,12 +29,13 @@ public interface ArticleTagService {
      *
      * @param articleTag 文章标签关联信息
      */
-    void addArticleTag(ArticleTag articleTag);
+    void addOrUpdateArticleTag(ArticleTag articleTag);
 
     /**
      * 删除文章标签关联
      *
      * @param id 文章标签关联ID
      */
-    void deleteArticleTag(Long id);
+    boolean deleteArticleTag(Long id);
+
 }

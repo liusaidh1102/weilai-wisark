@@ -1,6 +1,7 @@
 package com.weilai.topic.service;
 
 import com.weilai.model.topic.dos.TagTopic;
+import com.weilai.model.topic.dtos.TagDTO;
 
 import java.util.List;
 
@@ -29,14 +30,14 @@ public interface TagService {
      *
      * @param tagTopic 标签信息
      */
-    void addTag(TagTopic tagTopic);
+    void addTag(TagDTO tagTopic);
 
     /**
      * 更新标签
      *
      * @param tagTopic 标签信息
      */
-    void updateTag(TagTopic tagTopic);
+    void updateTag(TagDTO tagTopic);
 
     /**
      * 删除标签

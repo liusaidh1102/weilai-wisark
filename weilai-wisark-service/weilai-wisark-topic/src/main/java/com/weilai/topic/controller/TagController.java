@@ -2,6 +2,7 @@ package com.weilai.topic.controller;
 
 import com.weilai.common.response.Result;
 import com.weilai.model.topic.dos.TagTopic;
+import com.weilai.model.topic.dtos.TagDTO;
 import com.weilai.topic.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -57,7 +58,7 @@ public class TagController {
      */
     @PostMapping("/add")
     @Operation(summary = "添加标签", description = "添加新的标签")
-    public Result<String> addTag(@RequestBody TagTopic tagTopic) {
+    public Result<String> addTag(@RequestBody TagDTO tagTopic) {
         tagService.addTag(tagTopic);
         return Result.ok("标签添加成功");
     }
@@ -70,7 +71,7 @@ public class TagController {
      */
     @PutMapping("/update")
     @Operation(summary = "更新标签", description = "更新标签信息")
-    public Result<String> updateTag(@RequestBody TagTopic tagTopic) {
+    public Result<String> updateTag(@RequestBody TagDTO tagTopic) {
         tagService.updateTag(tagTopic);
         return Result.ok("标签更新成功");
     }

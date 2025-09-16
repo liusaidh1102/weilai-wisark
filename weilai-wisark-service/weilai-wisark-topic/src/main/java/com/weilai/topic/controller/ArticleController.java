@@ -2,6 +2,7 @@ package com.weilai.topic.controller;
 
 import com.weilai.common.response.Result;
 import com.weilai.model.topic.dos.Article;
+import com.weilai.model.topic.dtos.PublishArticleDTO;
 import com.weilai.topic.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,9 +57,9 @@ public class ArticleController {
      */
     @PostMapping("/add")
     @Operation(summary = "添加文章", description = "添加新的文章")
-    public Result<String> addArticle(@RequestBody Article article) {
-        articleService.addArticle(article);
-        return Result.ok("文章添加成功");
+    public Result<String> addArticle(@RequestBody PublishArticleDTO article) {
+        Long articleId = articleService.addArticle(article);
+        return articleId != null ? Result.ok("文章添加成功") : Result.fail("文章添加失败");
     }
 
     /**
@@ -69,7 +70,7 @@ public class ArticleController {
      */
     @PutMapping("/update")
     @Operation(summary = "更新文章", description = "更新文章信息")
-    public Result<String> updateArticle(@RequestBody Article article) {
+    public Result<String> updateArticle(@RequestBody PublishArticleDTO article) {
         articleService.updateArticle(article);
         return Result.ok("文章更新成功");
     }
