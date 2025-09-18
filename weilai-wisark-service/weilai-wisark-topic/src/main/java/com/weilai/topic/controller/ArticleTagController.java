@@ -49,7 +49,7 @@ public class ArticleTagController {
     }
 
     /**
-     * 添加文章标签关联
+     * 添加/修改文章标签关联
      *
      * @param articleTag 文章标签关联信息
      * @return 添加结果
@@ -57,7 +57,7 @@ public class ArticleTagController {
     @PostMapping("/add")
     @Operation(summary = "添加文章标签关联", description = "添加新的文章标签关联")
     public Result<String> addArticleTag(@RequestBody ArticleTag articleTag) {
-        articleTagService.addArticleTag(articleTag);
+        articleTagService.addOrUpdateArticleTag(articleTag);
         return Result.ok("文章标签关联添加成功");
     }
 

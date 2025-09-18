@@ -3,6 +3,7 @@ package com.weilai.topic.controller;
 import com.weilai.common.response.Result;
 import com.weilai.model.topic.dos.Article;
 import com.weilai.model.topic.dtos.PublishArticleDTO;
+import com.weilai.model.topic.vos.ArticleVO;
 import com.weilai.topic.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,9 +45,9 @@ public class ArticleController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "获取文章详情", description = "根据ID获取文章详情")
-    public Result<Article> getArticleById(@PathVariable Long id) {
-        Article article = articleService.getArticleById(id);
-        return Result.ok(article);
+    public Result<ArticleVO> getArticleById(@PathVariable Long id) {
+        ArticleVO articleVo  = articleService.getArticleById(id);
+        return Result.ok(articleVo);
     }
 
     /**
