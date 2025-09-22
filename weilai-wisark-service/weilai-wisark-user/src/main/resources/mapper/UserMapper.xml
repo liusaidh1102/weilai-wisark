@@ -2,7 +2,23 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.com.weilai.UserMapper">
+<mapper namespace="com.weilai.user.mapper.UserMapper">
+
+
+    <select id="selectUserVO" resultType="com.weilai.model.user.vos.UserVO">
+        SELECT u.id,
+               u.nickname,
+               u.avatar,
+               up.gender,
+               up.birthday,
+               up.introduction,
+               up.region,
+               up.website,
+               up.background_image
+        FROM tb_user u
+                 JOIN tb_user_profile up ON up.id = u.id
+        WHERE u.id = #{userId}
+    </select>
 
 
 

@@ -1,6 +1,14 @@
 server:
   port: 8116
 spring:
+  ai:
+    openai:
+      api-key: sk-2a789f715c914f108ea52b05d583918a
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
   config:
     import: nacos:weilai-wisark-ai.yaml
 
@@ -20,11 +28,11 @@ spring:
         group: DEFAULT_GROUP
 springdoc:
   api-docs:
-    enabled: true # 开启OpenApi接口
-    path: /v3/api-docs/weilai-wisark-ai # 自定义路径，默认为 "/v3/api-docs"
+    enabled: true
+    path: /v3/api-docs/weilai-wisark-ai
   swagger-ui:
-    enabled: true # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
-    path: /swagger-ui/index.html # 自定义路径，默认为"/swagger-ui/index.html"
+    enabled: true
+    path: /swagger-ui/index.html
 # swagger配置
 swagger:
   title: "ai服务接口"
@@ -35,3 +43,10 @@ swagger:
 logging:
   level:
     com.weilai.ai: debug
+    # spring ai advisor  日志
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: debug

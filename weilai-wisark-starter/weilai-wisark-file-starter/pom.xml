@@ -30,9 +30,9 @@
 
         <!--引入minio的依赖-->
         <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.2.1</version>
+            <groupId>com.kangaroohy</groupId>
+            <artifactId>minio-spring-boot-starter</artifactId>
+            <version>3.0.7</version>
         </dependency>
 
         <!--   引入Apache Tika的依赖，用于 判断文件的类型-->
@@ -40,6 +40,26 @@
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
             <version>1.28.1</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>log4j-over-slf4j</artifactId>-->
+<!--            <version>1.7.36</version>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

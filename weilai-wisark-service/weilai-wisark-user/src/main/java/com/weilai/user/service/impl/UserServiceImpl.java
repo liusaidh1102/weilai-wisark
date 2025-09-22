@@ -2,6 +2,7 @@ package com.weilai.user.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -11,8 +12,12 @@ import com.weilai.common.utils.SHAUtil;
 import com.weilai.model.user.dos.UserProfile;
 import com.weilai.model.user.dos.UserThirdAccount;
 import com.weilai.model.user.dtos.EmailLoginDTO;
+import com.weilai.model.user.vos.LoginResult;
+import com.weilai.model.user.vos.MenuItem;
+import com.weilai.model.user.vos.UserVO;
 import com.weilai.user.mapper.UserAccountMapper;
 import com.weilai.user.mapper.UserProfileMapper;
+import com.weilai.user.service.PermissionService;
 import com.weilai.user.service.UserService;
 import com.weilai.user.mapper.UserMapper;
 import com.weilai.model.user.dos.User;
@@ -26,7 +31,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.weilai.common.constants.CacheConstant.*;
@@ -58,9 +63,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Resource
     private SHAUtil shaUtil;
 
+    @Resource
+    private PermissionService permissionService;
+
 
     /**
      * 邮箱登录
+     *
      * @param email
      * @param code
      * @return
@@ -92,21 +101,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userId = insertUser.getId();
             userProfile.setId(userId);
             userProfileMapper.insert(userProfile);
-        }else{
+        } else {
             userId = user.getId();
         }
-        String token = getToken(userId);
-        return Result.ok(token);
+        return Result.ok(getToken(userId));
     }
 
     /**
      * 密码登录
+     *
      * @param
      * @param
      * @return
      */
     @Override
     public Result<?> loginByPwd(EmailLoginDTO emailLoginDTO) {
+        if (emailLoginDTO == null){
+            return Result.fail(BAD_REQUEST);
+        }
         String email = emailLoginDTO.getEmail();
         String pwd = emailLoginDTO.getPwd();
         if (StrUtil.isBlank(email) || StrUtil.isBlank(pwd)) {
@@ -115,27 +127,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getEmail, email);
         User user = userMapper.selectOne(queryWrapper);
-        if(user == null){
-            return Result.fail(ERROR_PWD);
+        if (user == null) {
+            return Result.fail(USER_NOT_EXISTS);
         }
         String password = user.getPassword();
-        if (StrUtil.isBlank(password)){
+        if (StrUtil.isBlank(password)) {
             return Result.fail(ERROR_PWD);
         }
         String shaPwd = shaUtil.getSHA(pwd);
         // 加密失败
-        if (shaPwd == null){
+        if (shaPwd == null) {
             return Result.fail();
         }
-        if (!shaPwd.equals(password)){
+        if (!shaPwd.equals(password)) {
             return Result.fail(ERROR_PWD);
         }
         Long userId = user.getId();
         // 登录
-        String token = getToken(userId);
-        return Result.ok(token);
+        return Result.ok(getToken(userId));
     }
 
+    // 改为分布式事务
     @Transactional
     @Override
     public Result<?> wechatLoginCallback(String code, String state) {
@@ -147,7 +159,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         lambdaQueryWrapper.eq(UserThirdAccount::getThirdOpenId, openId).eq(UserThirdAccount::getIsUnbind, 0);
         UserThirdAccount userThirdAccount = userAccountMapper.selectOne(lambdaQueryWrapper);
         Long userId = null;
-        if(userThirdAccount == null){
+        if (userThirdAccount == null) {
             // 插入用户
             User insertUser = new User();
             insertUser.setNickname(wechatUser.getNickname());
@@ -170,24 +182,51 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return Result.ok(getToken(userId));
     }
 
-
     /**
-     *  登录，返回token
-     * @param userId
-     * @return
+     *  获取用户基本信息
+     * @param userId 用户id
+     * @return 返回用户基本信息
      */
-    private String getToken(Long userId) {
-        // 登录
-        StpUtil.login(userId,new SaLoginParameter().setExtra("id", userId.toString()));
-        String token = StpUtil.getTokenValue();
-        String tokenKey = LOGIN_TOKEN_PREFIX + token;
-        stringRedisTemplate.opsForValue().set(tokenKey,userId.toString(),LOGIN_TOKEN_EXPIRE, TimeUnit.SECONDS);
-        return token;
+    @Override
+    public UserVO getUserVO(Long userId) {
+        String userStr = stringRedisTemplate.opsForValue().get(USER_INFO_PREFIX + userId);
+        if (!StrUtil.isBlank(userStr)){
+            return JSONUtil.toBean(userStr, UserVO.class);
+        }
+        // 获取用户基本信息
+        UserVO userVO = userMapper.selectUserVO(userId);
+        if (userVO == null){
+            return null;
+        }
+        // 存入redis
+        stringRedisTemplate.opsForValue().set(USER_INFO_PREFIX + userId, JSONUtil.toJsonStr(userVO), USER_INFO_EXPIRE, TimeUnit.SECONDS);
+        return userVO;
     }
 
 
     /**
-     *  获取用户信息
+     * 登录，返回token
+     *
+     * @param userId
+     * @return
+     */
+    private LoginResult getToken(Long userId) {
+        // 登录
+        StpUtil.login(userId, new SaLoginParameter().setExtra("id", userId.toString()));
+        String token = StpUtil.getTokenValue();
+        // 获取用户权限列表,存入redis
+        List<String> permissionList = permissionService.getPermissionList(userId);
+        // 获取用户菜单
+        List<MenuItem> menuList = permissionService.getMenuList(userId);
+        // 获取用户基本信息
+        UserVO userVO = getUserVO(userId);
+        return new LoginResult(token,menuList,permissionList,userVO);
+    }
+
+
+    /**
+     * 获取用户信息
+     *
      * @param code
      * @param state
      * @return

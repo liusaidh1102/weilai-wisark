@@ -1,5 +1,4 @@
 com.weilai.common.config.MvcConfig
-com.weilai.common.config.CorsConfig
 com.weilai.common.config.SwaggerConfig
 com.weilai.common.exception.GlobalException
 com.weilai.common.utils.EmailUtil

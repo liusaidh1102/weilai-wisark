@@ -10,12 +10,23 @@
     </parent>
 
     <artifactId>weilai-wisark-test</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-file-starter</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

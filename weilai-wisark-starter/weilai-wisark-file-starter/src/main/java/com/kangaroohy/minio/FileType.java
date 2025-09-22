@@ -1,4 +1,4 @@
-package com.weilai.file;
+package com.kangaroohy.minio;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.HttpHeaders;

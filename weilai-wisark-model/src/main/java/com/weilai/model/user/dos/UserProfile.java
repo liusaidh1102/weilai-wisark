@@ -27,7 +27,7 @@ public class UserProfile implements Serializable {
      */
     @NotNull(message="[主键（与tb_user.id一致，避免冗余）]不能为空")
     @Schema(description = "主键（与tb_user.id一致，避免冗余）", example = "123456789012345678")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id")
     private Long id;
 
     /**

@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public enum CodeEnum {
 
+    KICKED_OUT(-1,"账号在别处登录"),
 
     SUCCESS(200,"操作成功"),
     BAD_REQUEST(400,"操作失败"),
@@ -15,10 +16,11 @@ public enum CodeEnum {
     NO_RESOURCE_FOUND(404,"未找到资源"),
     INTERNAL_SERVER_ERROR(500,"服务器异常"),
 
-    // 添加其他状态码  用户服务 600 - 700
+    // 添加其他状态码  用户服务 600 - 700,
     CODE_EXISTS(600,"请勿重复发送验证码"),
     ERROR_CODE(601,"手机号或验证码错误"),
     ERROR_PWD(602,"密码错误"),
+    USER_NOT_EXISTS(603,"用户不存在"),
 
 
 

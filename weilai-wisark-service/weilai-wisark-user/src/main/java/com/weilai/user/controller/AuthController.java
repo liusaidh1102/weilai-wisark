@@ -1,42 +1,32 @@
 package com.weilai.user.controller;
-
+import cn.dev33.satoken.annotation.SaIgnore;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
-import cn.hutool.json.JSONUtil;
 import com.weilai.common.response.Result;
 import com.weilai.common.utils.EmailUtil;
 import com.weilai.model.user.dtos.EmailLoginDTO;
-import com.weilai.user.mapper.UserAccountMapper;
 import com.weilai.user.service.UserService;
-import com.weilai.user.wechat.TokenInfo;
 import com.weilai.user.wechat.WechatApp;
-import com.weilai.user.wechat.WechatUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
-import javax.imageio.ImageIO;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-
 import static com.weilai.common.constants.CacheConstant.EMAIL_CODE_EXPIRE;
 import static com.weilai.common.constants.CacheConstant.EMAIL_CODE_PREFIX;
-import static com.weilai.common.response.CodeEnum.BAD_REQUEST;
-import static com.weilai.common.response.CodeEnum.CODE_EXISTS;
+import static com.weilai.common.response.CodeEnum.*;
 
 /**
  * 认证控制器：处理登录、注册相关接口
@@ -102,10 +92,10 @@ public class AuthController {
      * @return 登录结果（令牌 ）
      */
     @PostMapping("/email/login/{email}/{code}")
-    @Operation(summary = "手机号验证码登录", description = "通过手机号 + 验证码完成登录")
+    @Operation(summary = "邮箱验证码登录", description = "通过邮箱 + 验证码完成登录")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "操作失败"),
-            @ApiResponse(responseCode = "601", description = "手机号或验证码错误"),
+            @ApiResponse(responseCode = "601", description = "邮箱或验证码错误"),
             @ApiResponse(responseCode = "500", description = "服务器内部错误")
     })
     public Result<?> loginByCode(@NotBlank @PathVariable String code, @Email @PathVariable String email) {
@@ -129,7 +119,7 @@ public class AuthController {
     }
 
 
-    @RequestMapping("/wechat/check")
+    @GetMapping("/wechat/check")
     @Operation(hidden = true)
     public String wxSignatureCheck(
             @RequestParam(value = "signature") String signature,
@@ -166,6 +156,7 @@ public class AuthController {
      *
      * @ return登录结果（令牌 ）
      */
+    @SaIgnore
     @PostMapping("/wechat/login")
     @Operation(summary = "微信登录", description = "通过微信登录")
     @ApiResponses(value = {
@@ -178,7 +169,7 @@ public class AuthController {
 
             // 使用 String.format 构建 URL
             String url = String.format(
-                    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=%s&scope=%s&state=STATE#wechat_redirect",
+                    "https://open.weixin.qq.com/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=%s&scope=%s&state=STATE#wechat_redirect",
                     wechatApp.getAppId(),
                     encodedRedirectUrl,
                     wechatApp.getResponseType(),
@@ -187,9 +178,9 @@ public class AuthController {
 
             log.info("url:{}", url);
 
-            // 在方法中添加
-            String[] supportedFormats = ImageIO.getWriterFormatNames();
-            log.info("当前环境支持的图片格式：{}", Arrays.toString(supportedFormats));
+
+//            String[] supportedFormats = ImageIO.getWriterFormatNames();
+//            log.info("当前环境支持的图片格式：{}", Arrays.toString(supportedFormats));
 
             // 生成二维码并转换为Base64
             String base64QRCode = QrCodeUtil.generateAsBase64(url, new QrConfig(300, 300), "png");
@@ -207,7 +198,7 @@ public class AuthController {
     @PostMapping("/qq/login")
     @Operation(summary = "qq登录", description = "通过qq登录")
     public Result<?> loginByQQ() {
-        return Result.ok();
+        return Result.fail();
     }
 
     /**
@@ -217,16 +208,29 @@ public class AuthController {
     @PostMapping("/github/login")
     @Operation(summary = "github登录", description = "通过github登录")
     public Result<?> loginByGithub() {
-        return Result.ok();
+        return Result.fail();
     }
-
 
 
 
     @RequestMapping("/wechat/callback")
-    @ResponseBody
     @Operation(hidden = true)
     public Result<?> wxLoginCallback(String code, String state) {
         return userService.wechatLoginCallback(code, state);
     }
+
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @PostMapping("/logout")
+    public Result<?> logout() {
+        if (!StpUtil.isLogin()){
+            return Result.fail(UNAUTHORIZED);
+        }
+        StpUtil.logout();
+        return Result.ok();
+    }
+
 }

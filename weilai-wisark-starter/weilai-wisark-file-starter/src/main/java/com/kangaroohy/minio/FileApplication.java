@@ -1,8 +1,7 @@
-package com.weilai.file;
+package com.kangaroohy.minio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 @SpringBootApplication
 public class FileApplication {
 

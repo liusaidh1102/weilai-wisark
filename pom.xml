@@ -106,6 +106,16 @@
               <artifactId>weilai-wisark-service</artifactId>
               <version>${project.version}</version>
           </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-starter</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-file-starter</artifactId>
+              <version>${project.version}</version>
+          </dependency>
 
 
           <!-- Mysql 数据库 -->

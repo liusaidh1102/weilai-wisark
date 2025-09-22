@@ -1,6 +1,9 @@
 package com.weilai.model.user.dos;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -20,6 +23,7 @@ public class SysPermission implements Serializable {
     * 权限ID
     */
     @NotNull(message="[权限ID]不能为空")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
     * 权限编码（唯一标识，如"resource:upload"）
@@ -34,22 +38,30 @@ public class SysPermission implements Serializable {
     @NotBlank(message="[权限名称（如资源上传）]不能为空")
     @Size(max= 100,message="编码长度不能超过100")
     @Length(max= 100,message="编码长度不能超过100")
-    private String permissionName;
+    private String label;
     /**
     * 权限类型（1-菜单，2-按钮，3-接口，4-数据权限）
     */
-    @NotNull(message="[权限类型（1-菜单，2-按钮，3-接口，4-数据权限）]不能为空")
-    private Integer permissionType;
+    @NotNull(message="[权限类型（menu，buttom，api，data）]不能为空")
+    private String permissionType;
     /**
     * 父权限ID（0-顶级权限，如"资源管理"是"资源上传"的父权限）
     */
     private Long parentId;
+
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+
     /**
     * 关联资源路径（菜单URL/接口路径，如"/api/resource/upload"）
     */
     @Size(max= 255,message="编码长度不能超过255")
     @Length(max= 255,message="编码长度不能超过255")
-    private String resourcePath;
+    private String key;
     /**
     * 排序权重（数字越大越靠前）
     */
