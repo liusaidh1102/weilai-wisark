@@ -1,0 +1,55 @@
+server:
+  port: 8111
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.121.196.50:3306/weilai_wisark_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: wisark@2025
+  servlet:
+    multipart:
+      # 设置文件的最大值和整个请求的最大值
+      max-file-size: 10MB
+      max-request-size: 20MB
+  config:
+    import: nacos:weilai-wisark-file.yaml
+  application:
+    # 该name属性和值，必须与nacos中配置的Data ID一致
+    name: weilai-wisark-file
+  # nacos注册
+  cloud:
+    nacos:
+      # 数据库连接、业务参数
+      discovery:
+        group: DEFAULT_GROUP
+        server-addr: 47.121.196.50:8848
+      config:
+        server-addr: 47.121.196.50:8848
+        file-extension: yaml # 文件后缀名
+        group: DEFAULT_GROUP
+springdoc:
+  api-docs:
+    enabled: true # 开启OpenApi接口
+    path: /v3/api-docs/weilai-wisark-file # 自定义路径，默认为 "/v3/api-docs"
+  swagger-ui:
+    enabled: true # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
+    path: /swagger-ui/index.html # 自定义路径，默认为"/swagger-ui/index.html"
+# swagger配置
+swagger:
+  title: "文件服务接口"
+  desc: "文件相关服务"
+  version: "1.0.0"
+  external-desc: 外部文档
+  external-url: #
+logging:
+  level:
+    com.weilai.user: debug
+# minio依赖:
+minio:
+  endpoint: http://47.121.196.50:9001/
+  access-key: ZPMZLS85BS08W145NPP5
+  secret-key: jSm+gPKOZuYoidgn8ixBCWemR39jDnNjh8bBX5nR
+  # 资源访问地址
+  address: http://47.121.196.50:9000/
+  bucket-name: weilai-wisark
+  enabled: true

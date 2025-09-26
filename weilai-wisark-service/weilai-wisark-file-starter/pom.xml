@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.weilai</groupId>
+        <artifactId>weilai-wisark-service</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>weilai-wisark-file-starter</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+
+    <dependencies>
+
+
+
+<!--        &lt;!&ndash;引入minio的依赖&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.kangaroohy</groupId>-->
+<!--            <artifactId>minio-spring-boot-starter</artifactId>-->
+<!--            <version>3.0.7</version>-->
+<!--        </dependency>-->
+
+        <!--       排除第三方的依赖   -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.2</version> <!-- 请根据需要选择版本 -->
+        </dependency>
+
+        <!--   引入Apache Tika的依赖，用于 判断文件的类型-->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.28.1</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

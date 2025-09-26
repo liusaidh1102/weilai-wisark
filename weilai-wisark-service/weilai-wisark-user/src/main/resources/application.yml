@@ -1,6 +1,11 @@
 server:
   port: 8118
 spring:
+  servlet:
+    multipart:
+      # 设置文件的最大值和整个请求的最大值
+      max-file-size: 10MB
+      max-request-size: 20MB
   # 邮箱服务
   mail:
     host: smtp.163.com
@@ -18,7 +23,8 @@ spring:
             enable: true
           socketFactoryClass: javax.net.ssl.SSLSocketFactory
   config:
-    import: nacos:weilai-wisark-user.yaml
+    import:
+      - nacos:weilai-wisark-user.yaml
   application:
     # 该name属性和值，必须与nacos中配置的Data ID一致
     name: weilai-wisark-user
@@ -80,13 +86,3 @@ wechat:
   scope: snsapi_login
   appsecret: 7dc394b0cf8fd4bdb12f7b1950eb5f33
   token: 123456
-
-# minio依赖
-kangaroohy:
-  minio:
-    endpoint: http://47.121.196.50:9001/
-    access-key: ZPMZLS85BS08W145NPP5
-    secret-key: jSm+gPKOZuYoidgn8ixBCWemR39jDnNjh8bBX5nR
-    # 资源访问地址
-    address: http://47.121.196.50:9000/
-    bucket-name: user
