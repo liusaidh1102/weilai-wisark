@@ -21,7 +21,7 @@ public enum CodeEnum {
     ERROR_CODE(601,"手机号或验证码错误"),
     ERROR_PWD(602,"密码错误"),
     USER_NOT_EXISTS(603,"用户不存在"),
-
+    DATE_NOT_EXISTS(604,"数据不存在"),
 
 
 

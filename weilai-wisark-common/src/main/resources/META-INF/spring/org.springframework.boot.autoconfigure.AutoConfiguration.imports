@@ -4,3 +4,4 @@ com.weilai.common.exception.GlobalException
 com.weilai.common.utils.EmailUtil
 com.weilai.common.utils.SHAUtil
 com.weilai.common.config.MybatisPlusConfig
+com.weilai.common.utils.AiUtil

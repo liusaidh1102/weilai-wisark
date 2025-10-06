@@ -12,4 +12,10 @@ public class UserException extends RuntimeException{
         this.codeEnum = codeEnum;
     }
 
+    public UserException(CodeEnum codeEnum,String msg){
+        super(msg);
+        this.codeEnum = codeEnum;
+    }
+
+
 }

@@ -49,7 +49,7 @@ public class MysqlChatMemory implements ChatMemory {
                 new LambdaQueryWrapper<ChatMessage>()
                         .eq(ChatMessage::getCid, conversationId)
                         .eq(ChatMessage::getIsDeleted, NO_DELETED) // 只查询未删除的记录
-                        .orderByDesc(ChatMessage::getCreatedTime)
+                        .orderByDesc(ChatMessage::getCreateTime)
                         .last("LIMIT " + lastN)
         );
         // 转换为Message类型列表

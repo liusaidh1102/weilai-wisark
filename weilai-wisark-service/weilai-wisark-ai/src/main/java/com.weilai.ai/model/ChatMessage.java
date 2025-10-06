@@ -67,11 +67,11 @@ public class ChatMessage implements Serializable {
     * 创建时间
     */
     @NotNull(message="[创建时间]不能为空")
-    private Date createdTime;
+    private Date createTime;
     /**
     * 更新时间
     */
     @NotNull(message="[更新时间]不能为空")
-    private Date updatedTime;
+    private Date updateTime;
 
 }

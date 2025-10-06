@@ -1,31 +1,41 @@
 package com.weilai.ai.controller;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sun.deploy.security.UserDeclinedException;
+import com.weilai.ai.mapper.ChatMessageMapper;
 import com.weilai.ai.mapper.ConversationMapper;
+import com.weilai.ai.model.ChatMessage;
 import com.weilai.ai.model.Conversation;
+import com.weilai.common.exception.UserException;
 import com.weilai.common.request.PageRequest;
 import com.weilai.common.response.PageResult;
 import com.weilai.common.response.Result;
+import com.weilai.common.utils.AiUtil;
 import com.weilai.common.utils.PageUtil;
 import com.wisark.api.feign.user.UserClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
 
+import static com.weilai.common.response.CodeEnum.DATE_NOT_EXISTS;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
+
 /**
  * ai聊天相关功能
  */
 @RestController
 @RequestMapping("/ai")
 @Tag(name = "ai聊天")
+@Slf4j
 public class ChatController {
 
     @Resource
@@ -35,9 +45,15 @@ public class ChatController {
     @Resource
     private ConversationMapper conversationMapper;
 
+    @Resource
+    private ChatMessageMapper chatMessageMapper;
+
 
     @Resource
     private UserClient userClient;
+
+    @Resource
+    private AiUtil aiUtil;
 
     /**
      * 提示词 压缩
@@ -70,9 +86,9 @@ public class ChatController {
 //            + "   - 根据上下文自然收尾，并可表达对用户继续探索的期待。"
 //            + "始终围绕学习成长场景提供支持，保持回应专注、积极、有建设性。";
 
-    @PostMapping(value = "/chat/text",produces="text/html;charset=UTF-8")
+    @PostMapping(value = "/chat/text", produces = "text/html;charset=UTF-8")
     @Operation(summary = "聊天流式接口")
-    public Flux<String> chatStream(@RequestParam(value = "msg") String msg,@RequestParam("cid") String cid) {
+    public Flux<String> chatStream(@RequestParam(value = "msg") String msg, @RequestParam("cid") String cid) {
         // 检查会话是否存在，不存在则自动创建
         Conversation existingConversation = conversationMapper.selectById(cid);
         if (existingConversation == null) {
@@ -80,6 +96,8 @@ public class ChatController {
             conversation.setCid(cid);
             // 远程调用获取用户信息
             conversation.setUid(userClient.getUserInfo().getData().getId());
+            // 设置标题
+            conversation.setTitle(aiUtil.generateSimpleTitle(msg));
             conversationMapper.insert(conversation);
         }
         // 会话记忆三步：
@@ -93,11 +111,10 @@ public class ChatController {
                 .advisors(a -> a
                         // 必须使用指定的id传输值
                         .param(CHAT_MEMORY_CONVERSATION_ID_KEY, cid)
-                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY,10))
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 .stream()
                 .content();
     }
-
 
 
     @PostMapping(value = "/chat/create/{cid}")
@@ -112,16 +129,51 @@ public class ChatController {
     }
 
     @PostMapping("/history/list")
-    @Operation(summary = "查询所有会话列表")
+    @Operation(summary = "查询所有会话列表,默认根据create_time字段降序排序")
     public Result<PageResult<Conversation>> listChats(@RequestBody PageRequest pageRequest) {
         Page<Conversation> pageQuery = PageUtil.toPageQuery(pageRequest);
         LambdaQueryWrapper<Conversation> eq = new LambdaQueryWrapper<Conversation>()
                 .eq(Conversation::getUid, userClient.getUserInfo().getData().getId())
-                .eq(Conversation::getIsDeleted, 0);
+                .eq(Conversation::getIsDeleted, 0)
+                .orderByDesc(Conversation::getCreateTime);
         Page<Conversation> conversationPage = conversationMapper.selectPage(pageQuery, eq);
         PageResult<Conversation> pageResult = PageUtil.toPageResult(conversationPage);
         return Result.ok(pageResult);
     }
+
+    @PostMapping("/history/{cid}")
+    @Operation(summary = "获取指定会话的聊天记录（分页）")
+    public Result<PageResult<ChatMessage>> getChatHistory(
+            @PathVariable("cid") String cid,
+            @RequestBody PageRequest pageRequest) {
+
+        // 验证会话是否存在
+        Conversation conversation = conversationMapper.selectById(cid);
+        if (conversation == null) {
+            return Result.fail(DATE_NOT_EXISTS,"会话不存在");
+        }
+
+        // 构建分页查询
+        Page<ChatMessage> pageQuery = PageUtil.toPageQuery(pageRequest);
+
+        // 构建查询条件
+        LambdaQueryWrapper<ChatMessage> queryWrapper = new LambdaQueryWrapper<ChatMessage>()
+                .eq(ChatMessage::getCid, cid)
+                .orderByDesc(ChatMessage::getCreateTime); // 按创建时间倒序
+
+        // 执行分页查询
+        Page<ChatMessage> messagePage = chatMessageMapper.selectPage(pageQuery, queryWrapper);
+
+        // 转换为通用分页结果
+        PageResult<ChatMessage> pageResult = PageUtil.toPageResult(messagePage);
+        return Result.ok(pageResult);
+    }
+
+
+
+
+
+
 
 
 
