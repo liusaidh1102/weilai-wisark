@@ -26,6 +26,7 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 
 import static com.weilai.common.response.CodeEnum.DATE_NOT_EXISTS;
+import static com.weilai.common.response.CodeEnum.PERMISSION_DENIED;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 
@@ -146,35 +147,103 @@ public class ChatController {
     public Result<PageResult<ChatMessage>> getChatHistory(
             @PathVariable("cid") String cid,
             @RequestBody PageRequest pageRequest) {
+        try {
+            // 验证会话是否存在
+            Conversation conversation = conversationMapper.selectById(cid);
+            if (conversation == null) {
+                return Result.fail(DATE_NOT_EXISTS, "会话不存在");
+            }
 
-        // 验证会话是否存在
-        Conversation conversation = conversationMapper.selectById(cid);
-        if (conversation == null) {
-            return Result.fail(DATE_NOT_EXISTS,"会话不存在");
+            // 构建分页查询
+            Page<ChatMessage> pageQuery = PageUtil.toPageQuery(pageRequest);
+
+            // 构建查询条件
+            LambdaQueryWrapper<ChatMessage> queryWrapper = new LambdaQueryWrapper<ChatMessage>()
+                    .eq(ChatMessage::getCid, cid)
+                    .eq(ChatMessage::getIsDeleted, 0)  // 未删除的
+                    .orderByDesc(ChatMessage::getCreateTime); // 按创建时间倒序
+
+            // 执行分页查询
+            Page<ChatMessage> messagePage = chatMessageMapper.selectPage(pageQuery, queryWrapper);
+
+            // 转换为通用分页结果
+            PageResult<ChatMessage> pageResult = PageUtil.toPageResult(messagePage);
+            return Result.ok(pageResult);
+        } catch (Exception e) {
+            log.error("获取失败：" + e.getMessage(), e);
+            return Result.fail("获取失败：" + e.getMessage());
         }
 
-        // 构建分页查询
-        Page<ChatMessage> pageQuery = PageUtil.toPageQuery(pageRequest);
-
-        // 构建查询条件
-        LambdaQueryWrapper<ChatMessage> queryWrapper = new LambdaQueryWrapper<ChatMessage>()
-                .eq(ChatMessage::getCid, cid)
-                .orderByDesc(ChatMessage::getCreateTime); // 按创建时间倒序
-
-        // 执行分页查询
-        Page<ChatMessage> messagePage = chatMessageMapper.selectPage(pageQuery, queryWrapper);
-
-        // 转换为通用分页结果
-        PageResult<ChatMessage> pageResult = PageUtil.toPageResult(messagePage);
-        return Result.ok(pageResult);
     }
 
 
+    @DeleteMapping("/history/{cid}")
+    @Operation(summary = "删除指定会话")
+    public Result<String> deleteChat(@PathVariable("cid") String cid) {
+        try {
+            // 验证会话是否存在
+            Conversation conversation = conversationMapper.selectById(cid);
+            if (conversation == null) {
+                return Result.fail(DATE_NOT_EXISTS, "会话不存在");
+            }
+
+            // 权限验证 - 确保用户只能删除自己的会话
+            Long currentUserId = userClient.getUserInfo().getData().getId();
+            if (!conversation.getUid().equals(currentUserId)) {
+                return Result.fail(PERMISSION_DENIED, "无权限删除该会话");
+            }
+
+            // 逻辑删除会话
+            conversation.setIsDeleted(1);
+            int result = conversationMapper.updateById(conversation);
+
+            if (result > 0) {
+                log.info("会话删除成功, cid: {}, uid: {}", cid, currentUserId);
+                return Result.ok();
+            } else {
+                log.warn("会话删除失败, cid: {}, uid: {}", cid, currentUserId);
+                return Result.fail("会话删除失败");
+            }
+        } catch (Exception e) {
+            log.error("删除会话时发生异常, cid: {}", cid, e);
+            return Result.fail("删除会话失败: " + e.getMessage());
+        }
+    }
 
 
+    @PutMapping("/history")
+    @Operation(summary = "重命名指定会话")
+    public Result<String> renameChat(@RequestParam("cid") String cid,
+                                     @RequestParam("title") String title) {
+        try {
+            // 验证会话是否存在
+            Conversation conversation = conversationMapper.selectById(cid);
+            if (conversation == null) {
+                return Result.fail(DATE_NOT_EXISTS, "会话不存在");
+            }
 
+            // 权限验证 - 确保用户只能重命名自己的会话
+            Long currentUserId = userClient.getUserInfo().getData().getId();
+            if (!conversation.getUid().equals(currentUserId)) {
+                return Result.fail(PERMISSION_DENIED, "无权限重命名该会话");
+            }
 
+            // 更新会话标题
+            conversation.setTitle(title);
+            int result = conversationMapper.updateById(conversation);
 
+            if (result > 0) {
+                log.info("会话重命名成功, cid: {}, newTitle: {}, uid: {}", cid, title, currentUserId);
+                return Result.ok();
+            } else {
+                log.warn("会话重命名失败, cid: {}, newTitle: {}, uid: {}", cid, title, currentUserId);
+                return Result.fail("会话重命名失败");
+            }
+        } catch (Exception e) {
+            log.error("重命名会话时发生异常, cid: {}, title: {}", cid, title, e);
+            return Result.fail("重命名会话失败: " + e.getMessage());
+        }
+    }
 
 
 }

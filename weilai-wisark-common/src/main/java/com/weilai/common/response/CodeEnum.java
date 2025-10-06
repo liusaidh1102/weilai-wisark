@@ -22,6 +22,7 @@ public enum CodeEnum {
     ERROR_PWD(602,"密码错误"),
     USER_NOT_EXISTS(603,"用户不存在"),
     DATE_NOT_EXISTS(604,"数据不存在"),
+    PERMISSION_DENIED(605,"权限不足"),
 
 
 
