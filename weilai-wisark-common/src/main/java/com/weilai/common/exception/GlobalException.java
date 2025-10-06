@@ -15,6 +15,14 @@ import static com.weilai.common.response.CodeEnum.NO_RESOURCE_FOUND;
 @Slf4j
 public class GlobalException{
 
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public Result<?> handleNoResourceFoundException(NoResourceFoundException e){
+        e.printStackTrace();
+        return Result.fail(NO_RESOURCE_FOUND);
+    }
+
+
     /**
      * 处理其他未捕获异常
      */
@@ -36,12 +44,6 @@ public class GlobalException{
         return Result.fail(BAD_REQUEST);
     }
 
-    @ExceptionHandler(NoResourceFoundException.class)
-    public Result<?> handleNoResourceFoundException(NoResourceFoundException e){
-        e.printStackTrace();
-        return Result.fail(NO_RESOURCE_FOUND);
-    }
-
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         e.printStackTrace();
@@ -52,6 +54,17 @@ public class GlobalException{
     public Result<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         e.printStackTrace();
         return Result.fail(CodeEnum.BAD_REQUEST,"请求方式不合法");
+    }
+
+    /**
+     * 系统异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(SystemException.class)
+    public Result<?> handleSystemException(SystemException e) {
+        e.printStackTrace();
+        return Result.fail(CodeEnum.INTERNAL_SERVER_ERROR);
     }
 
 }

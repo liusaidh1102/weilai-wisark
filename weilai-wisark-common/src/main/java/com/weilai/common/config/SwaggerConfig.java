@@ -48,7 +48,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         Server server = new Server()
-                .url("http://82.156.115.174:8080");
+                .url("http://localhost:8080");
 
         return new OpenAPI()
                 .info(new Info()
