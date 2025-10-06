@@ -2,6 +2,7 @@ package com.weilai.ai.memory;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.weilai.ai.mapper.ChatMessageMapper;
 import com.weilai.ai.model.ChatMessage;
+import jakarta.annotation.Resource;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 // 自定义ChatMemory
 public class MysqlChatMemory implements ChatMemory {
 
-    @Autowired
+    @Resource
     private ChatMessageMapper chatMessageMapper;
 
     private static final Integer IS_DELETED = 1;
@@ -28,9 +29,11 @@ public class MysqlChatMemory implements ChatMemory {
             chatMessage.setMessageType(message.getMessageType().name());
             // 其他字段可根据需要补充
             return chatMessage;
-        }).collect(Collectors.toList());
+        }).toList();
         // 插入数据库
-        chatMessageMapper.insert(chatMessages);
+        for (ChatMessage chatMessage : chatMessages){
+            chatMessageMapper.insert(chatMessage);
+        }
     }
 
     /**

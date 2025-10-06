@@ -1,7 +1,13 @@
 package com.weilai.ai.controller;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.weilai.ai.mapper.ConversationMapper;
 import com.weilai.ai.model.Conversation;
+import com.weilai.common.request.PageRequest;
+import com.weilai.common.response.PageResult;
 import com.weilai.common.response.Result;
+import com.weilai.common.utils.PageUtil;
 import com.wisark.api.feign.user.UserClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,6 +15,9 @@ import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
+
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 /**
@@ -101,5 +110,19 @@ public class ChatController {
         int insert = conversationMapper.insert(conversation);
         return insert > 0 ? Result.ok(conversation.getCid()) : Result.fail("创建会话失败");
     }
+
+    @PostMapping("/history/list")
+    @Operation(summary = "查询所有会话列表")
+    public Result<PageResult<Conversation>> listChats(@RequestBody PageRequest pageRequest) {
+        Page<Conversation> pageQuery = PageUtil.toPageQuery(pageRequest);
+        LambdaQueryWrapper<Conversation> eq = new LambdaQueryWrapper<Conversation>()
+                .eq(Conversation::getUid, userClient.getUserInfo().getData().getId())
+                .eq(Conversation::getIsDeleted, 0);
+        Page<Conversation> conversationPage = conversationMapper.selectPage(pageQuery, eq);
+        PageResult<Conversation> pageResult = PageUtil.toPageResult(conversationPage);
+        return Result.ok(pageResult);
+    }
+
+
 
 }
