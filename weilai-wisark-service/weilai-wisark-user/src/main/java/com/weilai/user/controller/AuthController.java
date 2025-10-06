@@ -8,6 +8,7 @@ import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
 import com.weilai.common.response.Result;
 import com.weilai.common.utils.EmailUtil;
+import com.weilai.model.user.dtos.CodeLoginDTO;
 import com.weilai.model.user.dtos.EmailLoginDTO;
 import com.weilai.user.service.UserService;
 import com.weilai.user.wechat.WechatApp;
@@ -87,19 +88,17 @@ public class AuthController {
     /**
      * 邮箱验证码登录, 若无账号则自动登录
      *
-     * @param email 邮箱
-     * @param code  验证码
      * @return 登录结果（令牌 ）
      */
-    @PostMapping("/email/login/{email}/{code}")
+    @PostMapping("/code/login")
     @Operation(summary = "邮箱验证码登录", description = "通过邮箱 + 验证码完成登录")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "操作失败"),
             @ApiResponse(responseCode = "601", description = "邮箱或验证码错误"),
             @ApiResponse(responseCode = "500", description = "服务器内部错误")
     })
-    public Result<?> loginByCode(@NotBlank @PathVariable String code, @Email @PathVariable String email) {
-        return userService.loginByCode(email, code);
+    public Result<?> loginByCode(CodeLoginDTO codeLoginDTO) {
+        return userService.loginByCode(codeLoginDTO.getEmail(), codeLoginDTO.getCode());
     }
 
     /**

@@ -6,10 +6,13 @@ import com.weilai.minio.exceptions.MinioServiceException;
 import com.weilai.minio.enums.PolicyType;
 import com.weilai.minio.mapper.FileMapper;
 import com.weilai.minio.utils.CustomUtil;
+import com.weilai.model.user.vos.UserVO;
+import com.wisark.api.feign.user.UserClient;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
 import io.minio.messages.*;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -147,7 +150,8 @@ public class FileService {
     // =================================文件操作==================================
 
 
-
+    @Resource
+    private UserClient userClient;
 
 
     /**
@@ -156,6 +160,7 @@ public class FileService {
      * @return
      */
     public FileInfo uploadFile(MultipartFile file){
+        UserVO userVO = userClient.getUserInfo().getData();
         // 参数校验
         if (file == null || file.isEmpty()) {
             log.error("上传文件为空");
@@ -185,8 +190,8 @@ public class FileService {
                     CustomUtil.getFileExtension(originalFilename),
                     url,
                     // 获取当前用户的id
-                    1L,
-                    1L);
+                    userVO.getId(),
+                    userVO.getId());
             // 数据库保存对应的信息
             fileMapper.insert(fileInfo);
             return fileInfo;

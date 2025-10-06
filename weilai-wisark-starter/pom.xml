@@ -12,7 +12,6 @@
     <artifactId>weilai-wisark-starter</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>weilai-wisark-file-starter</module>
     </modules>
 
     <properties>

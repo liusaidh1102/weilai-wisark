@@ -28,3 +28,5 @@ spring:
           ssl:
             enable: true
           socketFactoryClass: javax.net.ssl.SSLSocketFactory
+gateway:
+  url: http://localhost:8080

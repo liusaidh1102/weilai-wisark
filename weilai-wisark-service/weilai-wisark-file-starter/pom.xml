@@ -30,6 +30,11 @@
 <!--            <version>3.0.7</version>-->
 <!--        </dependency>-->
 
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-feign-api</artifactId>
+        </dependency>
+
         <!--       排除第三方的依赖   -->
         <dependency>
             <groupId>io.minio</groupId>

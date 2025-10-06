@@ -22,10 +22,15 @@
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>1.0.0-M5</version>
         </dependency>
+
+
 
     </dependencies>
 
+
+<!--    spring ai 1.0使用的是MessageWindowsChatMemory, 1.0.0-M5中没有MessageWindowsChatMemory-->
     <dependencyManagement>
         <dependencies>
             <dependency>

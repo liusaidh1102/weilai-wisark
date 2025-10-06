@@ -16,6 +16,7 @@
         <module>weilai-wisark-user</module>
         <module>test</module>
         <module>weilai-wisark-ai</module>
+        <module>weilai-wisark-file-starter</module>
     </modules>
 
     <properties>

@@ -29,7 +29,8 @@ spring:
     web-application-type: reactive
   # 配置解决cloud20221.0.5开始不使用bootstrap的问题
   config:
-    import: nacos:weilai-wisark-gateway.yaml
+    import:
+      - nacos:weilai-wisark-gateway.yaml
   cloud:
     # nacos服务注册
     nacos:

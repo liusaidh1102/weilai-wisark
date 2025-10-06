@@ -26,12 +26,6 @@
         </dependency>
 
 
-        <!--    minio相关依赖    -->
-        <dependency>
-            <groupId>com.weilai</groupId>
-            <artifactId>weilai-wisark-file-starter</artifactId>
-        </dependency>
-
         <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
         <dependency>
             <groupId>cn.dev33</groupId>
@@ -89,6 +83,12 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!--     swagger依赖   -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+<!--            <version>${springdoc.version}</version>-->
+        </dependency>
 
 
 

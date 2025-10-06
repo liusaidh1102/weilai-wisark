@@ -7,9 +7,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import static com.weilai.common.response.CodeEnum.USER_NOT_EXISTS;
 /**
  * 用户个人信息模块
@@ -23,7 +22,7 @@ public class PersonalController {
     @Resource
     private UserService userService;
 
-    @PostMapping("/info")
+    @GetMapping("/info")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "603", description = "用户不存在")
     })
@@ -34,7 +33,7 @@ public class PersonalController {
         if(userVO == null){
             return Result.fail(USER_NOT_EXISTS);
         }
-        return Result.ok(userService.getUserVO(userId));
+        return Result.ok(userVO);
     }
 
 }

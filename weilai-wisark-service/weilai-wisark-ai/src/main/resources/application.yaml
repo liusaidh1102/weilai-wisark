@@ -1,6 +1,18 @@
 server:
   port: 8116
+# 设置Mapper接口所对应的XML文件位置
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.121.196.50:3306/weilai_wisark_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: wisark@2025
+  data:
+    redis:
+      port: 6379
+      host: 101.35.16.42
+      database: 1
+      password: wisark@2025
   ai:
     openai:
       api-key: sk-2a789f715c914f108ea52b05d583918a
@@ -9,8 +21,12 @@ spring:
         options:
           model: deepseek-chat
           temperature: 0.7
+          max-tokens: 500
+          # 设置惩罚值
+          frequency-penalty: 0.7
   config:
-    import: nacos:weilai-wisark-ai.yaml
+    import:
+      - nacos:weilai-wisark-ai.yaml
 
   application:
     # 该name属性和值，必须与nacos中配置的Data ID一致
