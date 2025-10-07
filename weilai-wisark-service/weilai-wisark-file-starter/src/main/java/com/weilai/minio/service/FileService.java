@@ -15,16 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import static com.weilai.common.constants.CacheConstant.FILE_INFO_EXPIRE;
 import static com.weilai.common.constants.CacheConstant.FILE_INFO_PREFIX;
 import static com.weilai.common.response.CodeEnum.*;
 import static com.weilai.common.response.CodeEnum.FILE_ERROR;
-
 @Service
 @Slf4j
 public class FileService {
@@ -174,7 +171,8 @@ public class FileService {
         String uploadId = file.getUploadId();
         String bucket = file.getBucket();
         List<Integer> chunkList = minioService.getChunkByMD5(fileName, uploadId, bucket);
-        if (CollectionUtil.isEmpty(chunkList)) {
+        // 检查分片是不是缺少
+        if (CollectionUtil.isEmpty(chunkList) || chunkList.size() != file.getChunkNum()) {
             stringRedisTemplate.delete(key);
             return Result.fail(FILE_ERROR, "文件合并失败，分片信息不完整");
         }
