@@ -4,6 +4,7 @@ import com.weilai.common.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
@@ -66,5 +67,14 @@ public class GlobalException{
         e.printStackTrace();
         return Result.fail(CodeEnum.INTERNAL_SERVER_ERROR);
     }
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        e.printStackTrace();
+        return Result.fail(CodeEnum.BAD_REQUEST,e.getMessage());
+    }
+
+
 
 }

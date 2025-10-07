@@ -29,5 +29,13 @@ public class CacheConstant {
     public static final long USER_MENUS_EXPIRE = 12 * 60 * 60;
 
 
+    /**
+     * 文件缓存前缀
+     */
+    // 文件信息缓存key
+    public static final String FILE_INFO_PREFIX = "file:info:";
+    public static final int FILE_INFO_EXPIRE = 24 * 60 * 60;
+
+
 
 }

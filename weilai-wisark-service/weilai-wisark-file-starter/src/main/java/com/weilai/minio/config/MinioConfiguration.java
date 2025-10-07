@@ -1,4 +1,4 @@
-package com.weilai.minio.configuration;
+package com.weilai.minio.config;
 import com.weilai.minio.constant.MinioConstant;
 import io.minio.MinioClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

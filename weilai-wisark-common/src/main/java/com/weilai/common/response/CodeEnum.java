@@ -25,6 +25,14 @@ public enum CodeEnum {
     PERMISSION_DENIED(605,"权限不足"),
 
 
+    // 文件服务
+    FILE_NOT_EXISTS(700,"文件不存在"),
+    FILE_UPLOAD_ING(701,"文件断点续传"),
+    FILE_ERROR(703,"文件上传失败"),
+    FILE_OK(704,"文件上传成功"),
+    FILE_INIT_OK(705,"初始化成功"),
+
+
 
 
 

@@ -54,6 +54,8 @@
         <sa-token.version>1.44.0</sa-token.version>
         <tencentcloud.version>3.1.1000</tencentcloud.version>
         <hutool.version>5.7.8</hutool.version>
+        <minio.version>8.2.1</minio.version>
+        <tika.version>1.28.1</tika.version>
 
 
 
@@ -235,11 +237,36 @@
               <version>${tencentcloud.version}</version>
           </dependency>
 
+
+          <!--  hutool工具类  -->
           <dependency>
               <groupId>cn.hutool</groupId>
               <artifactId>hutool-all</artifactId>
               <version>${hutool.version}</version>
           </dependency>
+
+        <!--   文件服务    -->
+          <!--    仅仅引入minio  ： 排除第三方的依赖   -->
+          <dependency>
+              <groupId>io.minio</groupId>
+              <artifactId>minio</artifactId>
+              <version>${minio.version}</version>
+          </dependency>
+
+          <!--   引入Apache Tika的依赖，用于 判断文件的类型-->
+          <dependency>
+              <groupId>org.apache.tika</groupId>
+              <artifactId>tika-core</artifactId>
+              <version>${tika.version}</version>
+          </dependency>
+
+
+
+
+
+
+
+
 
 
 
