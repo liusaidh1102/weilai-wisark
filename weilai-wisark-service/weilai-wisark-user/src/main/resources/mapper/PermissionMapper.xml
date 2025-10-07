@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilai.user.mapper.PermissionMapper">
+
+    <!-- 查询权限信息 ： 待优化  -->
+    <select id="getPermissionList" resultType="java.lang.String">
+        SELECT tp.permission_code
+        FROM tb_user u
+                 JOIN tb_user_role tur ON u.id = tur.user_id
+                 JOIN tb_role tr ON tr.role_id = tur.role_id
+                 JOIN tb_role_permission trp ON trp.role_id = tr.role_id
+                 JOIN tb_permission tp ON tp.id = trp.permission_id
+        WHERE u.id = #{userId} and tp.permission_type = 'button'
+    </select>
+
+    <!--  查询菜单和权限信息  -->
+    <select id="getMenuList" resultType="com.weilai.model.user.vos.MenuItem">
+        SELECT tp.id, tp.key, tp.label, tp.icon, tp.parent_id,tp.sort
+        FROM tb_user u
+                 JOIN tb_user_role tur ON u.id = tur.user_id
+                 JOIN tb_role tr ON tr.role_id = tur.role_id
+                 JOIN tb_role_permission trp ON trp.role_id = tr.role_id
+                 JOIN tb_permission tp ON tp.id = trp.permission_id
+        WHERE u.id = #{userId}
+          AND tp.permission_type = 'menu'
+    </select>
+
+
+</mapper>

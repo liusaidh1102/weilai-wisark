@@ -5,6 +5,9 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -20,6 +23,7 @@ public class SysRole implements Serializable {
     * 角色唯一标识
     */
     @NotNull(message="[角色唯一标识]不能为空")
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer roleId;
     /**
     * 角色名称（如管理员、普通用户）

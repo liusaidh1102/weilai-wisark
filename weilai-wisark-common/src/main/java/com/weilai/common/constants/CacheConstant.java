@@ -9,12 +9,24 @@ public class CacheConstant {
     /*
      * 用户缓存前缀
      */
+    // 邮箱验证码缓存key
     public static final String EMAIL_CODE_PREFIX  = "verify:login:code:";
-    public static final String LOGIN_TOKEN_PREFIX  = "sa:login:token:";
-
     public static final long EMAIL_CODE_EXPIRE = 60 * 5;
+    //  登录token缓存key
+    public static final String LOGIN_TOKEN_PREFIX  = "sa:login:token:";
     public static final long LOGIN_TOKEN_EXPIRE  = 24 * 60 * 60;
-
+    // 用户信息缓存key
+    public static final String USER_INFO_PREFIX = "user:info:";
+    public static final long USER_INFO_EXPIRE = 24 * 60 * 60;
+    // 用户权限缓存key
+    public static final String USER_PERMISSIONS_PREFIX = "user:permissions:list:";
+    public static final long USER_PERMISSIONS_EXPIRE = 12 * 60 * 60;
+    // 用户角色缓存key
+    public static final String USER_ROLES_PREFIX = "user:roles:list:";
+    public static final long USER_ROLES_EXPIRE = 24 * 60 * 60;
+    // 用户菜单缓存key
+    public static final String USER_MENUS_PREFIX = "user:menu:list:";
+    public static final long USER_MENUS_EXPIRE = 12 * 60 * 60;
 
 
 

@@ -1,11 +1,15 @@
 package com.weilai.common.config;
-import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import java.util.Collections;
 @Configuration
 @ConfigurationProperties(prefix = "swagger")
 @Data
@@ -39,14 +43,26 @@ public class SwaggerConfig {
 
 
 
+
+
     @Bean
-    public OpenAPI swaggerOpenApi() {
+    public OpenAPI customOpenAPI() {
+        Server server = new Server()
+                .url("http://localhost:8080");
+
         return new OpenAPI()
-                .info(new Info().title(title)
-                        .description(desc)
-                        .version(version))
-                .externalDocs(new ExternalDocumentation()
-                        .description(externalDesc)
-                        .url(externalUrl));
+                .info(new Info()
+                        .title(title)
+                        .version(version)
+                        .description(desc))
+                .components(new Components()
+                        .addSecuritySchemes("Authorization",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.HEADER)
+                                        .name("Authorization")))
+                .addSecurityItem(new SecurityRequirement().addList("Authorization"))
+                .servers(Collections.singletonList(server));
     }
+
 }

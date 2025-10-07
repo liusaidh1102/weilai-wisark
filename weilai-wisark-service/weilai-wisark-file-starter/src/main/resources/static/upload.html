@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .upload-form {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="file"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>文件上传测试</h1>
+    
+    <div class="upload-form">
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">选择文件:</label>
+                <input type="file" id="file" name="file" required>
+            </div>
+            <button type="submit">上传文件</button>
+        </form>
+    </div>
+    
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showResult('请选择一个文件', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            fetch('/file/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    showResult('上传成功: ' + JSON.stringify(data.data, null, 2), 'success');
+                } else {
+                    showResult('上传失败: ' + data.msg, 'error');
+                }
+            })
+            .catch(error => {
+                showResult('请求失败: ' + error.message, 'error');
+            });
+        });
+        
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<pre>' + message + '</pre>';
+            resultDiv.className = 'result ' + type;
+        }
+    </script>
+</body>
+</html>

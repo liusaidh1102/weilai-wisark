@@ -1,9 +1,30 @@
 server:
   port: 8118
 spring:
+  servlet:
+    multipart:
+      # 设置文件的最大值和整个请求的最大值
+      max-file-size: 10MB
+      max-request-size: 20MB
+  # 邮箱服务
+  mail:
+    host: smtp.163.com
+    port: 465
+    password: FOAPSFOUQBZBYMXN
+    username: wkldzwq@163.com
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          enable: true
+          from: wkldzwq@163.com
+          ssl:
+            enable: true
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
   config:
-    import: nacos:weilai-wisark-user.yaml
-
+    import:
+      - nacos:weilai-wisark-user.yaml
   application:
     # 该name属性和值，必须与nacos中配置的Data ID一致
     name: weilai-wisark-user
@@ -40,7 +61,7 @@ sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: authorization
   # token 有效期（单位：秒） 默认30天，-1 代表永久有效
-  timeout: 2592000
+  timeout: 43200
   # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
   active-timeout: -1
   # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
@@ -58,10 +79,10 @@ wechat:
   # appId
   app-id: wxbc71f8cdd77d23aa
   # 授权后重定向的回调链接地址
-  redirect-uri: http://www.coderliu.top:8080/auth/wechat/callback
+  redirect-uri: https://6eedcf93.r23.cpolar.top/wechat/callback
   # 返回类型
   response-type: code
   # snsapi_base snsapi_userinfo
-  scope: snsapi_userinfo
+  scope: snsapi_login
   appsecret: 7dc394b0cf8fd4bdb12f7b1950eb5f33
   token: 123456

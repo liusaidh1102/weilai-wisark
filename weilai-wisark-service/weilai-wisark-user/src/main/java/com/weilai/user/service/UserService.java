@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.weilai.common.response.Result;
 import com.weilai.model.user.dos.User;
 import com.weilai.model.user.dtos.EmailLoginDTO;
+import com.weilai.model.user.vos.UserVO;
 
 public interface UserService extends IService<User> {
 
@@ -32,4 +33,14 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result<?> wechatLoginCallback(String code, String state);
+
+
+    /**
+     * 获取用户基本信息
+     * @param userId
+     * @return
+     */
+    UserVO getUserVO(Long userId);
+
+
 }

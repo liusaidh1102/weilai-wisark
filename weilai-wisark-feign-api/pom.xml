@@ -28,6 +28,13 @@
             <artifactId>weilai-wisark-common</artifactId>
         </dependency>
 
+
+        <!-- 引入model模块 -->
+        <dependency>
+            <groupId>com.weilai</groupId>
+            <artifactId>weilai-wisark-model</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

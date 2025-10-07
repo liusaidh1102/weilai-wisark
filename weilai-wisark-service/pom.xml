@@ -18,6 +18,7 @@
         <module>weilai-wisark-topic</module>
         <module>weilai-wisark-streaming</module>
         <module>weilai-wisark-ai</module>
+        <module>weilai-wisark-file-starter</module>
     </modules>
 
     <properties>
@@ -74,6 +75,18 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+
+        <!-- redis依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--   mysql依赖 和 mybatisPlus依赖    -->
+
+
+
+
     </dependencies>
 
 </project>

@@ -42,6 +42,10 @@ public class Result<T> implements Serializable {
         return Result.ok(CodeEnum.INTERNAL_SERVER_ERROR);
     }
 
+    public static <T> Result<T> fail(CodeEnum codeEnum,String msg) {
+        return new Result<>(codeEnum.getCode(),msg,null);
+    }
+
     public static <T> Result<T> fail(String msg) {
         return new Result<>(CodeEnum.INTERNAL_SERVER_ERROR.getCode(),msg,null);
     }

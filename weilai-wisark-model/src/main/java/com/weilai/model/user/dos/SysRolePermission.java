@@ -2,6 +2,9 @@ package com.weilai.model.user.dos;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 /**
@@ -16,6 +19,7 @@ public class SysRolePermission implements Serializable {
     * 关联ID
     */
     @NotNull(message="[关联ID]不能为空")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
     * 角色ID（关联sys_role.id）

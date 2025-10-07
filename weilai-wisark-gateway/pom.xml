@@ -22,13 +22,19 @@
        <dependency>
            <groupId>com.weilai</groupId>
            <artifactId>weilai-wisark-common</artifactId>
-<!--           <exclusions>-->
-<!--               <exclusion>-->
-<!--                   <groupId>org.springframework.boot</groupId>-->
-<!--                   <artifactId>spring-boot-starter-web</artifactId>-->
-<!--               </exclusion>-->
-<!--           </exclusions>-->
        </dependency>
+
+<!--       <dependency>-->
+<!--           <groupId>com.weilai</groupId>-->
+<!--           <artifactId>weilai-wisark-model</artifactId>-->
+<!--       </dependency>-->
+
+       <dependency>
+           <groupId>com.weilai</groupId>
+           <artifactId>weilai-wisark-feign-api</artifactId>
+       </dependency>
+
+
 
 
        <!-- SpringCloud Gateway -->
@@ -74,6 +80,29 @@
            <artifactId>spring-boot-starter-data-redis</artifactId>
        </dependency>
 
+
+
+       <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
+       <dependency>
+           <groupId>cn.dev33</groupId>
+           <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+       </dependency>
+
+       <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+       <dependency>
+           <groupId>cn.dev33</groupId>
+           <artifactId>sa-token-redis-jackson</artifactId>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.commons</groupId>
+           <artifactId>commons-pool2</artifactId>
+       </dependency>
+
+
+       <dependency>
+           <groupId>cn.hutool</groupId>
+           <artifactId>hutool-all</artifactId>
+       </dependency>
 
 
 

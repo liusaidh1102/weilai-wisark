@@ -41,7 +41,7 @@
         <mysql.version>8.0.14</mysql.version>
         <mybatis.version>3.5.19</mybatis.version>
         <mybatis.spring.version>3.0.5</mybatis.spring.version>
-        <mybatis.plus.version>3.5.12</mybatis.plus.version>
+        <mybatis.plus.version>3.5.14</mybatis.plus.version>
         <spring.cloud.version>2023.0.3</spring.cloud.version>
         <spring.cloud.alibaba>2023.0.3.2</spring.cloud.alibaba>
         <spring.cloud.bootstrap>4.0.1</spring.cloud.bootstrap>
@@ -53,6 +53,7 @@
         <hibernate.version>6.0.1.Final</hibernate.version>
         <sa-token.version>1.44.0</sa-token.version>
         <tencentcloud.version>3.1.1000</tencentcloud.version>
+        <hutool.version>5.7.8</hutool.version>
 
 
 
@@ -71,11 +72,6 @@
     <dependencyManagement>
       <dependencies>
           <!--  内部依赖        -->
-          <dependency>
-              <groupId>com.weilai</groupId>
-              <artifactId>weilai-wisark-common</artifactId>
-              <version>${project.version}</version>
-          </dependency>
           <dependency>
               <groupId>com.weilai</groupId>
               <artifactId>weilai-wisark-model</artifactId>
@@ -106,6 +102,16 @@
               <artifactId>weilai-wisark-service</artifactId>
               <version>${project.version}</version>
           </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-starter</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>com.weilai</groupId>
+              <artifactId>weilai-wisark-file-starter</artifactId>
+              <version>${project.version}</version>
+          </dependency>
 
 
           <!-- Mysql 数据库 -->
@@ -114,20 +120,10 @@
               <artifactId>mysql-connector-java</artifactId>
               <version>${mysql.version}</version>
           </dependency>
-          <dependency>
-              <groupId>org.mybatis</groupId>
-              <artifactId>mybatis</artifactId>
-              <version>${mybatis.version}</version>
-          </dependency>
-          <dependency>
-              <groupId>org.mybatis</groupId>
-              <artifactId>mybatis-spring</artifactId>
-              <version>${mybatis.spring.version}</version>
-          </dependency>
           <!--  mp起步依赖        -->
           <dependency>
               <groupId>com.baomidou</groupId>
-              <artifactId>mybatis-plus-boot-starter</artifactId>
+              <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
               <version>${mybatis.plus.version}</version>
           </dependency>
           <!-- springCloud   必须加上type和scope -->
@@ -218,6 +214,18 @@
               <version>${sa-token.version}</version>
           </dependency>
 
+          <dependency>
+              <groupId>cn.dev33</groupId>
+              <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+              <version>${sa-token.version}</version>
+          </dependency>
+
+          <dependency>
+              <groupId>cn.dev33</groupId>
+              <artifactId>sa-token-redis-jackson</artifactId>
+              <version>${sa-token.version}</version>
+          </dependency>
+
           <!--  腾讯云发短信      -->
           <dependency>
               <groupId>com.tencentcloudapi</groupId>
@@ -226,6 +234,13 @@
               <!-- 请到 maven 官网查询 sdk 的所有版本，例如 cvm 的产品包链接为 https://central.sonatype.com/artifact/com.tencentcloudapi/tencentcloud-sdk-java-cvm/versions -->
               <version>${tencentcloud.version}</version>
           </dependency>
+
+          <dependency>
+              <groupId>cn.hutool</groupId>
+              <artifactId>hutool-all</artifactId>
+              <version>${hutool.version}</version>
+          </dependency>
+
 
 
       </dependencies>

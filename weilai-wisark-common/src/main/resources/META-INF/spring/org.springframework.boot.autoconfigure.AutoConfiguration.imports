@@ -1,6 +1,7 @@
 com.weilai.common.config.MvcConfig
-com.weilai.common.config.CorsConfig
 com.weilai.common.config.SwaggerConfig
 com.weilai.common.exception.GlobalException
 com.weilai.common.utils.EmailUtil
 com.weilai.common.utils.SHAUtil
+com.weilai.common.config.MybatisPlusConfig
+com.weilai.common.utils.AiUtil
