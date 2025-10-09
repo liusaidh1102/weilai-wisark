@@ -37,5 +37,11 @@ public class CacheConstant {
     public static final int FILE_INFO_EXPIRE = 24 * 60 * 60;
 
 
+    /**
+     * 分布式锁缓存key
+     */
+    public static final String LOCK_KEY_PREFIX = "lock:";
+
+
 
 }

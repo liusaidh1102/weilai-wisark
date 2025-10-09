@@ -5,3 +5,4 @@ com.weilai.common.utils.EmailUtil
 com.weilai.common.utils.SHAUtil
 com.weilai.common.config.MybatisPlusConfig
 com.weilai.common.utils.AiUtil
+com.weilai.common.utils.RedisSimpleLock

@@ -56,6 +56,8 @@
         <hutool.version>5.7.8</hutool.version>
         <minio.version>8.2.1</minio.version>
         <tika.version>1.28.1</tika.version>
+        <redisson.version>3.50.0</redisson.version>
+
 
 
 
@@ -260,14 +262,12 @@
               <version>${tika.version}</version>
           </dependency>
 
-
-
-
-
-
-
-
-
+          <!--   redisson依赖   -->
+          <dependency>
+              <groupId>org.redisson</groupId>
+              <artifactId>redisson</artifactId>
+              <version>${redisson.version}</version>
+          </dependency>
 
 
       </dependencies>
