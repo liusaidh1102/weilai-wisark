@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilai.streaming.mapper.LiveMessageMapper">
+
+    <resultMap type="com.weilai.model.streaming.dos.LiveMessage" id="LiveMessageMap">
+        <id property="id" column="id"/>
+        <result property="liveId" column="live_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="isPinned" column="is_pinned"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="deletedAt" column="deleted_at"/>
+    </resultMap>
+
+    <!-- 添加直播消息 -->
+    <insert id="insert" parameterType="com.weilai.model.streaming.dos.LiveMessage">
+        INSERT INTO `live_message`(live_id, user_id, content, image_url, like_count, is_pinned, created_at)
+        VALUES (#{liveId}, #{userId}, #{content}, #{imageUrl}, #{likeCount}, #{isPinned}, #{createdAt})
+    </insert>
+
+    <!-- 根据条件查询直播消息 -->
+    <select id="selectList" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="LiveMessageMap">
+        SELECT * FROM `live_message`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    
+    <!-- 根据条件查询单个直播消息 -->
+    <select id="selectOne" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="LiveMessageMap">
+        SELECT * FROM `live_message`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 更新直播消息 -->
+    <update id="updateById" parameterType="com.weilai.model.streaming.dos.LiveMessage">
+        UPDATE `live_message`
+        <set>
+            <if test="liveId != null">
+                live_id = #{liveId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url = #{imageUrl},
+            </if>
+            <if test="likeCount != null">
+                like_count = #{likeCount},
+            </if>
+            <if test="isPinned != null">
+                is_pinned = #{isPinned},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

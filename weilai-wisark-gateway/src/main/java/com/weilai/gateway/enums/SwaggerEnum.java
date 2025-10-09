@@ -15,6 +15,7 @@ public enum SwaggerEnum {
      */
     USER_SERVICE("weilai-wisark-user", "用户服务接口", "用户相关功能接口"),
 
+
     /**
      * AI服务API
      */
@@ -23,7 +24,11 @@ public enum SwaggerEnum {
     /**
      * 网关服务API
      */
-    GATEWAY_SERVICE("weilai-wisark-gateway", "网关服务接口", "API网关相关功能接口");
+    GATEWAY_SERVICE("weilai-wisark-gateway", "网关服务接口", "API网关相关功能接口"),
+    /**
+     * 话题交流的服务API
+     */
+    TOPIC_SERVICE("weilai-wisark-topic", "话题交流服务接口", "话题交流相关功能接口");
 
     private final String id;
     private final String title;

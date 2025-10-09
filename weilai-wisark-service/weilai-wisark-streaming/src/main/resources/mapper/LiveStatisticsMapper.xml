@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilai.streaming.mapper.LiveStatisticsMapper">
+
+    <resultMap type="com.weilai.model.streaming.dos.LiveStatistics" id="LiveStatisticsMap">
+        <id property="id" column="id"/>
+        <result property="liveId" column="live_id"/>
+        <result property="concurrentViewers" column="concurrent_viewers"/>
+        <result property="peakTime" column="peak_time"/>
+        <result property="messageCount" column="message_count"/>
+        <result property="newFollowerCount" column="new_follower_count"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <!-- 添加直播统计数据 -->
+    <insert id="insert" parameterType="com.weilai.model.streaming.dos.LiveStatistics">
+        INSERT INTO `live_statistics`(live_id, concurrent_viewers, peak_time, message_count, new_follower_count, created_at)
+        VALUES (#{liveId}, #{concurrentViewers}, #{peakTime}, #{messageCount}, #{newFollowerCount}, #{createdAt})
+    </insert>
+
+    <!-- 根据条件查询直播统计数据 -->
+    <select id="selectList" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="LiveStatisticsMap">
+        SELECT * FROM `live_statistics`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    
+    <!-- 根据ID查询直播统计数据 -->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="LiveStatisticsMap">
+        SELECT * FROM `live_statistics` WHERE id = #{id}
+    </select>
+
+    <!-- 更新直播统计数据 -->
+    <update id="updateById" parameterType="com.weilai.model.streaming.dos.LiveStatistics">
+        UPDATE `live_statistics`
+        <set>
+            <if test="liveId != null">
+                live_id = #{liveId},
+            </if>
+            <if test="concurrentViewers != null">
+                concurrent_viewers = #{concurrentViewers},
+            </if>
+            <if test="peakTime != null">
+                peak_time = #{peakTime},
+            </if>
+            <if test="messageCount != null">
+                message_count = #{messageCount},
+            </if>
+            <if test="newFollowerCount != null">
+                new_follower_count = #{newFollowerCount},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

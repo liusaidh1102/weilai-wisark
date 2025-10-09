@@ -135,6 +135,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return Result.fail(ERROR_PWD);
         }
         String shaPwd = shaUtil.getSHA(pwd);
+        System.out.println("password:" + password);
+        System.out.println("shaPwd:" +shaPwd);
         // 加密失败
         if (shaPwd == null) {
             return Result.fail();

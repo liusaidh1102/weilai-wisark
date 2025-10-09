@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @TableName("tag")
 @Schema(description = "技术领域标签表")
-public class Tag implements Serializable {
+public class TagTopic implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

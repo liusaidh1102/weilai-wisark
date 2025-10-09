@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilai.streaming.mapper.LiveTagMapper">
+
+    <resultMap type="com.weilai.model.streaming.dos.LiveTag" id="LiveTagMap">
+        <id property="id" column="id"/>
+        <result property="liveId" column="live_id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <!-- 添加直播标签 -->
+    <insert id="insert" parameterType="com.weilai.model.streaming.dos.LiveTag">
+        INSERT INTO `live_tag`(live_id, tag_id, created_at)
+        VALUES (#{liveId}, #{tagId}, #{createdAt})
+    </insert>
+
+    <!-- 根据条件查询直播标签 -->
+    <select id="selectList" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper" 
+            resultMap="LiveTagMap">
+        SELECT * FROM `live_tag`
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    
+    <!-- 根据ID查询直播标签 -->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="LiveTagMap">
+        SELECT * FROM `live_tag` WHERE id = #{id}
+    </select>
+
+    <!-- 删除直播标签 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM `live_tag` WHERE id = #{id}
+    </delete>
+
+</mapper>

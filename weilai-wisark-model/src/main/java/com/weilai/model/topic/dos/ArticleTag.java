@@ -23,7 +23,6 @@ public class ArticleTag implements Serializable {
     /**
      * ID
      */
-    @NotNull(message = "[ID]不能为空")
     @Schema(description = "ID")
     private Long id;
 
