@@ -9,21 +9,19 @@ public class RedissonLock implements ILock{
 
     private final RedissonClient redissonClient;
 
-    private final String service;
 
-    public RedissonLock(RedissonClient redissonClient, String service) {
+    public RedissonLock(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
-        this.service = service;
     }
 
     @Override
-    public boolean tryLock(long timeoutSec) throws InterruptedException {
+    public boolean tryLock(String service,long time,TimeUnit timeUnit) throws InterruptedException {
         RLock lock = redissonClient.getLock(LOCK_KEY_PREFIX + service);
-        return lock.tryLock(timeoutSec, TimeUnit.SECONDS);
+        return lock.tryLock(time, timeUnit);
     }
 
     @Override
-    public void unlock() {
+    public void unlock(String service) {
         RLock lock = redissonClient.getLock(LOCK_KEY_PREFIX + service);
         lock.unlock();
     }

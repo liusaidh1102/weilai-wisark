@@ -2,19 +2,17 @@ package com.weilai.common.utils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import static com.weilai.common.constants.CacheConstant.LOCK_KEY_PREFIX;
 // 基于redis的setnx命令实现分布式锁
-@Component
+//@Component
 public class RedisSimpleLock implements ILock {
 
     /**
      * 业务或资源名称
      */
-    private final String service;
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -26,8 +24,7 @@ public class RedisSimpleLock implements ILock {
         UNLOCK_SCRIPT.setResultType(Long.class);
     }
 
-    public RedisSimpleLock(String service, StringRedisTemplate stringRedisTemplate) {
-        this.service = service;
+    public RedisSimpleLock(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
@@ -36,16 +33,16 @@ public class RedisSimpleLock implements ILock {
 
 
     @Override
-    public boolean tryLock(long timeoutSec) {
+    public boolean tryLock(String service,long time,TimeUnit timeUnit) {
         String threadId = ID_PREFIX + Thread.currentThread().getId();
         // 当前锁的key   lock + 资源名
         String lockKey = LOCK_KEY_PREFIX + service;
-        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, threadId,timeoutSec, TimeUnit.SECONDS);
+        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, threadId,time, timeUnit);
         return Boolean.TRUE.equals(flag);
     }
 
     @Override
-    public void unlock() {
+    public void unlock(String  service) {
         String threadId = ID_PREFIX + Thread.currentThread().getId();
 //        String threadIdInRedis = stringRedisTemplate.opsForValue().get(LOCK_KEY_PREFIX + service);
 //        if (threadId.equals(threadIdInRedis)){

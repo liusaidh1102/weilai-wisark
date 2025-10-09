@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-feign-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-model/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/weilai-wisark-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/weilai-wisark-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-service/test/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-service/weilai-wisark-ai/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/weilai-wisark-service/weilai-wisark-file-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-service/weilai-wisark-streaming/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-service/weilai-wisark-topic/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/weilai-wisark-service/weilai-wisark-file-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-service/weilai-wisark-user/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/weilai-wisark-starter/weilai-wisark-file-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-starter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/weilai-wisark-starter/weilai-wisark-file-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-test/filr-starter-test/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-test/filr-starter-test/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/weilai-wisark-test/src/main/java" charset="UTF-8" />
