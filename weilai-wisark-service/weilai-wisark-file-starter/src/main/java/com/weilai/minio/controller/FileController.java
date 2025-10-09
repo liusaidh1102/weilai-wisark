@@ -7,17 +7,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 @RestController
 @RequestMapping("/file")
 @Tag(name = "文件上传", description = "文件上传接口")
 public class FileController {
 
-    @Autowired
+    @Resource
     private FileService fileService;
 
 
@@ -51,7 +51,7 @@ public class FileController {
     /**
      * 分片初始化
      * @param fileDTO 文件信息
-     * @return ResponseResult<Object>
+     * @return Result<Object>
      */
     @PostMapping("/init")
     @Operation(summary = "初始化文件上传")
@@ -66,7 +66,7 @@ public class FileController {
 
     /**
      * 完成上传
-     * @return ResponseResult<Object>
+     * @return Result<Object>
      */
     @PostMapping("/merge/{md5}")
     @Operation(summary = "合并上传任务")
