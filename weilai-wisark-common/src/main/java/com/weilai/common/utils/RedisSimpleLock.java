@@ -5,7 +5,6 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import static com.weilai.common.constants.CacheConstant.LOCK_KEY_PREFIX;
 // 基于redis的setnx命令实现分布式锁
 //@Component
 public class RedisSimpleLock implements ILock {
@@ -13,6 +12,7 @@ public class RedisSimpleLock implements ILock {
     /**
      * 业务或资源名称
      */
+    private String service;
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -24,7 +24,8 @@ public class RedisSimpleLock implements ILock {
         UNLOCK_SCRIPT.setResultType(Long.class);
     }
 
-    public RedisSimpleLock(StringRedisTemplate stringRedisTemplate) {
+    public RedisSimpleLock(String service,StringRedisTemplate stringRedisTemplate) {
+        this.service = service;
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
@@ -33,22 +34,21 @@ public class RedisSimpleLock implements ILock {
 
 
     @Override
-    public boolean tryLock(String service,long time,TimeUnit timeUnit) {
+    public boolean tryLock(long time,TimeUnit timeUnit) {
         String threadId = ID_PREFIX + Thread.currentThread().getId();
         // 当前锁的key   lock + 资源名
-        String lockKey = LOCK_KEY_PREFIX + service;
-        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, threadId,time, timeUnit);
+        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(service, threadId,time, timeUnit);
         return Boolean.TRUE.equals(flag);
     }
 
     @Override
-    public void unlock(String  service) {
+    public void unlock() {
         String threadId = ID_PREFIX + Thread.currentThread().getId();
 //        String threadIdInRedis = stringRedisTemplate.opsForValue().get(LOCK_KEY_PREFIX + service);
 //        if (threadId.equals(threadIdInRedis)){
 //            stringRedisTemplate.delete(LOCK_KEY_PREFIX + service);
 //        }
         // 确保操作的原子性
-        stringRedisTemplate.execute(UNLOCK_SCRIPT, Collections.singletonList(LOCK_KEY_PREFIX + service), threadId);
+        stringRedisTemplate.execute(UNLOCK_SCRIPT, Collections.singletonList(service), threadId);
     }
 }

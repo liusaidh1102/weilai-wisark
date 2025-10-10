@@ -607,7 +607,7 @@ public class MinioService {
             ListPartsResponse partResult = customMinioClient.listMultipart(bucketName, null, objectName, 1000, 0, uploadId, null, null);
 
             if (partResult.result().partList() == null || partResult.result().partList().isEmpty()) {
-                log.error("未找到任何分片数据，uploadId: {}", uploadId);
+                log.error("未找到任何分片数据 | 分片数据不完整，uploadId: {}", uploadId);
                 return false;
             }
 

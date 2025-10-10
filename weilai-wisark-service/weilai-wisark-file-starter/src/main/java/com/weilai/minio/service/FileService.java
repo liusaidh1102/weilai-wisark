@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.weilai.common.response.Result;
+import com.weilai.common.utils.RedisSimpleLock;
 import com.weilai.minio.entity.File;
 import com.weilai.minio.entity.FileDTO;
 import com.weilai.minio.exceptions.MinioServiceException;
@@ -15,13 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import static com.weilai.common.constants.CacheConstant.FILE_INFO_EXPIRE;
-import static com.weilai.common.constants.CacheConstant.FILE_INFO_PREFIX;
+import java.util.concurrent.TimeUnit;
+
+import static com.weilai.common.constants.CacheConstant.*;
 import static com.weilai.common.response.CodeEnum.*;
 import static com.weilai.common.response.CodeEnum.FILE_ERROR;
+
 @Service
 @Slf4j
 public class FileService {
@@ -148,8 +152,8 @@ public class FileService {
         String uploadId = (String) map.get("uploadId");
         file.setUploadId(uploadId);
         // 将文件信息存入redis中, 设置一天过期
-        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(file), FILE_INFO_EXPIRE);
-        return Result.ok(FILE_INIT_OK,map);
+        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(file), FILE_INFO_EXPIRE, TimeUnit.SECONDS);
+        return Result.ok(FILE_INIT_OK, map);
     }
 
 
@@ -160,6 +164,8 @@ public class FileService {
      * @return
      */
     public Result<File> mergeMultipartUpload(String md5) {
+        String lockKey = LOCK_FILE_KEY_PREFIX + md5;
+        RedisSimpleLock lock = new RedisSimpleLock(lockKey,stringRedisTemplate);
         String key = FILE_INFO_PREFIX + md5;
         String fileStr = stringRedisTemplate.opsForValue().get(key);
         if (fileStr == null) {
@@ -177,15 +183,31 @@ public class FileService {
             return Result.fail(FILE_ERROR, "文件合并失败，分片信息不完整");
         }
 
-        //根据文件的fileName和uploadId和bucketName上传
-        boolean result = minioService.mergeMultipartUpload(fileName, file.getUploadId(), bucket);
-        //合并成功
-        if (result) {
+        boolean isLocked = false;
+        // 加锁，避免并发出现的问题
+        try {
+            isLocked = lock.tryLock(5, TimeUnit.SECONDS);
+            if (!isLocked) {
+                // 锁被占用
+                return Result.fail(FILE_ERROR, "文件正在合并！");
+            }
+            boolean result = minioService.mergeMultipartUpload(fileName, file.getUploadId(), bucket);
+            //合并成功
+            if (!result) {
+                return Result.fail(FILE_ERROR, "分片数据不完整");
+            }
             //存入数据库
             fileMapper.insert(file);
             stringRedisTemplate.delete(key);
             return Result.ok(FILE_OK, "文件上传成功！", file);
+        } catch (Exception e) {
+            log.error("文件上传失败！", e);
+            return Result.fail(FILE_ERROR, "文件上传失败！");
+        } finally {
+            if (isLocked) {
+                lock.unlock();
+            }
         }
-        return Result.fail(FILE_ERROR, "文件上传失败，请重试！");
+//        return Result.fail(FILE_ERROR, "文件上传失败，请重试！");
     }
 }

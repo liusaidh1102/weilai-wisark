@@ -3,26 +3,32 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
-import static com.weilai.common.constants.CacheConstant.LOCK_KEY_PREFIX;
 @Component
 public class RedissonLock implements ILock{
+
+
+    /**
+     * 业务或资源名称
+     */
+    private final String service;
 
     private final RedissonClient redissonClient;
 
 
-    public RedissonLock(RedissonClient redissonClient) {
+    public RedissonLock(String service,RedissonClient redissonClient) {
+        this.service = service;
         this.redissonClient = redissonClient;
     }
 
     @Override
-    public boolean tryLock(String service,long time,TimeUnit timeUnit) throws InterruptedException {
-        RLock lock = redissonClient.getLock(LOCK_KEY_PREFIX + service);
+    public boolean tryLock(long time,TimeUnit timeUnit) throws InterruptedException {
+        RLock lock = redissonClient.getLock(service);
         return lock.tryLock(time, timeUnit);
     }
 
     @Override
-    public void unlock(String service) {
-        RLock lock = redissonClient.getLock(LOCK_KEY_PREFIX + service);
+    public void unlock() {
+        RLock lock = redissonClient.getLock(service);
         lock.unlock();
     }
 }

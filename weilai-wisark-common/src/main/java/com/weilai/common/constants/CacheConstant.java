@@ -40,7 +40,8 @@ public class CacheConstant {
     /**
      * 分布式锁缓存key
      */
-    public static final String LOCK_KEY_PREFIX = "lock:";
+    // 文件合并分布式锁
+    public static final String LOCK_FILE_KEY_PREFIX = "lock:file:";
 
 
 
