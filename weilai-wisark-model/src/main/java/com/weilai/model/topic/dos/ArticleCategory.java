@@ -1,9 +1,11 @@
 package com.weilai.model.topic.dos;
 
-import cn.hutool.core.date.DateTime;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 @TableName("article_category")
@@ -16,5 +18,5 @@ public class ArticleCategory {
     @Schema(description = "分类ID")
     private Long categoryId;
     @Schema(description = "创建时间")
-    private DateTime createdAt;
+    private LocalDateTime createdAt;
 }
