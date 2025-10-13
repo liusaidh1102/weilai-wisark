@@ -57,6 +57,7 @@
         <minio.version>8.2.1</minio.version>
         <tika.version>1.28.1</tika.version>
         <redisson.version>3.50.0</redisson.version>
+        <sentinel.version>2023.0.3.2</sentinel.version>
 
 
 
@@ -267,6 +268,12 @@
               <groupId>org.redisson</groupId>
               <artifactId>redisson</artifactId>
               <version>${redisson.version}</version>
+          </dependency>
+
+          <dependency>
+              <groupId>com.alibaba.cloud</groupId>
+              <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+              <version>${sentinel.version}</version>
           </dependency>
 
 

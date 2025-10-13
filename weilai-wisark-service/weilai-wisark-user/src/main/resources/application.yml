@@ -30,6 +30,10 @@ spring:
     name: weilai-wisark-user
   # nacos注册
   cloud:
+    sentinel :
+      transport:
+        dashboard: http://82.156.115.174:8090
+      http-method-specify: true
     nacos:
       # 数据库连接、业务参数
       discovery:

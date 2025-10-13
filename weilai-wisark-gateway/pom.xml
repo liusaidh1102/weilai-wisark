@@ -21,21 +21,8 @@
 
        <dependency>
            <groupId>com.weilai</groupId>
-           <artifactId>weilai-wisark-common</artifactId>
-       </dependency>
-
-<!--       <dependency>-->
-<!--           <groupId>com.weilai</groupId>-->
-<!--           <artifactId>weilai-wisark-model</artifactId>-->
-<!--       </dependency>-->
-
-       <dependency>
-           <groupId>com.weilai</groupId>
            <artifactId>weilai-wisark-feign-api</artifactId>
        </dependency>
-
-
-
 
        <!-- SpringCloud Gateway -->
        <dependency>

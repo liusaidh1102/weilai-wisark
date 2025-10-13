@@ -2,6 +2,11 @@ server:
   # 前端请求8080
   port: 8080
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
   data:
     redis:
       # Redis数据库索引（默认为0）
@@ -31,8 +36,8 @@ spring:
   config:
     import:
       - nacos:weilai-wisark-gateway.yaml
-  cloud:
     # nacos服务注册
+  cloud:
     nacos:
       discovery:
         server-addr: 47.121.196.50:8848
