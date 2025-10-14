@@ -12,12 +12,6 @@ import java.util.Properties;
 @Slf4j
 public class AiUtil {
 
-    public static void main(String[] args) {
-        String content = "Stanford CoreNLP 需要加载预训练的模型文件才能正常工作（如词性标注、分词等功能），而你当前的项目中没有包含这些模型文件。";
-        String title = new AiUtil().generateSimpleTitle(content);
-        System.out.println(title);
-    }
-
     /**
      * 简单标题生成 - 基于问题类型识别
      * @param content 用户提问内容

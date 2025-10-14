@@ -44,5 +44,12 @@ public class CacheConstant {
     public static final String LOCK_FILE_KEY_PREFIX = "lock:file:";
 
 
+    /**
+     * ai会话缓存前缀
+     */
+    public static final String AI_CONVERSATION_PREFIX = "ai:conversation:";
+    public static final int AI_CONVERSATION_EXPIRE = 24 * 60 * 60;
+
+
 
 }
