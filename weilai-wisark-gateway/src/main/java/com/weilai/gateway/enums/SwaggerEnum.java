@@ -28,7 +28,11 @@ public enum SwaggerEnum {
     /**
      * 话题交流的服务API
      */
-    TOPIC_SERVICE("weilai-wisark-topic", "话题交流服务接口", "话题交流相关功能接口");
+    TOPIC_SERVICE("weilai-wisark-topic", "话题交流服务接口", "话题交流相关功能接口"),
+    /**
+     * 直播服务API
+     */
+    LIVE_SERVICE("weilai-wisark-streaming", "直播服务接口", "直播相关功能接口");
 
     private final String id;
     private final String title;

@@ -1,43 +1,33 @@
-package com.weilai.model.streaming.dos;
+package com.weilai.model.streaming.vos;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.weilai.model.user.vos.UserVO;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-/**
- * 直播房间表
- * @TableName live_room
- */
 @Data
-@TableName("live_room")
-@Schema(description = "直播房间表")
-public class LiveRoom implements Serializable {
-
+public class LiveDetailVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     /**
      * 房间ID
      */
-    @NotNull(message = "[房间ID]不能为空")
+
     @Schema(description = "房间ID")
     private String id;
 
     /**
-     * 主播用户ID
+     * 用户信息
      */
-    @NotNull(message = "[主播用户ID]不能为空")
-    @Schema(description = "主播用户ID")
-    private String userId;
+    @Schema(description = "用户信息")
+    private UserVO userInfo;
+
 
     /**
      * 直播标题
      */
-    @NotNull(message = "[直播标题]不能为空")
     @Schema(description = "直播标题")
     private String title;
 
@@ -56,7 +46,7 @@ public class LiveRoom implements Serializable {
     /**
      * 状态：0-未开始，1-直播中，2-已结束，3-已取消
      */
-    @NotNull(message = "[状态]不能为空")
+
     @Schema(description = "状态：0-未开始，1-直播中，2-已结束，3-已取消")
     private Integer status;
 
