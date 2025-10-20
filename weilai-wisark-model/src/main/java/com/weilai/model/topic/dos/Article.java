@@ -1,12 +1,12 @@
 package com.weilai.model.topic.dos;
 
-import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 文章/沸点表
@@ -126,25 +126,25 @@ public class Article implements Serializable {
      * 发布时间
      */
     @Schema(description = "发布时间")
-    private DateTime publishedAt;
+    private LocalDateTime publishedAt;
 
     /**
      * 创建时间
      */
     @NotNull(message = "[创建时间]不能为空")
     @Schema(description = "创建时间")
-    private DateTime createdAt;
+    private LocalDateTime createdAt;
 
     /**
      * 更新时间
      */
     @NotNull(message = "[更新时间]不能为空")
     @Schema(description = "更新时间")
-    private DateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     /**
      * 删除时间
      */
     @Schema(description = "删除时间")
-    private DateTime deletedAt;
+    private LocalDateTime deletedAt;
 }

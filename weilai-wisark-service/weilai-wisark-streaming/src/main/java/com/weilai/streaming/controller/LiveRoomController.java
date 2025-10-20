@@ -2,6 +2,7 @@ package com.weilai.streaming.controller;
 
 import com.weilai.common.response.Result;
 import com.weilai.model.streaming.dos.LiveRoom;
+import com.weilai.model.streaming.vos.LiveDetailVo;
 import com.weilai.streaming.service.LiveRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,8 +44,8 @@ public class LiveRoomController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "获取直播房间详情", description = "根据ID获取直播房间详情")
-    public Result<LiveRoom> getLiveRoomById(@PathVariable Long id) {
-        LiveRoom liveRoom = liveRoomService.getLiveRoomById(id);
+    public Result<LiveDetailVo> getLiveRoomById(@PathVariable String id) {
+        LiveDetailVo liveRoom = liveRoomService.selectLiveRoomById(id);
         return Result.ok(liveRoom);
     }
 
@@ -55,10 +56,10 @@ public class LiveRoomController {
      * @return 添加结果
      */
     @PostMapping("/add")
-    @Operation(summary = "添加直播房间", description = "添加新的直播房间")
+    @Operation(summary = "创建直播房间", description = "创建新的直播房间")
     public Result<String> addLiveRoom(@RequestBody LiveRoom liveRoom) {
-        liveRoomService.addLiveRoom(liveRoom);
-        return Result.ok("直播房间添加成功");
+       return liveRoomService.addLiveRoom(liveRoom);
+
     }
 
     /**
@@ -82,7 +83,7 @@ public class LiveRoomController {
      */
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "删除直播房间", description = "根据直播房间ID删除直播房间")
-    public Result<String> deleteLiveRoom(@PathVariable Long id) {
+    public Result<String> deleteLiveRoom(@PathVariable String id) {
         liveRoomService.deleteLiveRoom(id);
         return Result.ok("直播房间删除成功");
     }
