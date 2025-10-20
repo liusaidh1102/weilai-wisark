@@ -1,10 +1,9 @@
-package com.weilai.minio.configuration;
+package com.weilai.minio.config;
 
 import com.weilai.minio.constant.MinioConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * 类 MinioProperties 功能描述：

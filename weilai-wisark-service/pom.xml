@@ -82,8 +82,10 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!--   mysql依赖 和 mybatisPlus依赖    -->
-
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
 
 
 

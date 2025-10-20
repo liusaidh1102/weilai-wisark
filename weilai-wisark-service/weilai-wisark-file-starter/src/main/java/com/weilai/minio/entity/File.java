@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 /**
 * OSS对象存储表
 * @TableName tb_file
@@ -13,7 +15,7 @@ import java.util.Date;
 @TableName("tb_file")
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileInfo implements Serializable {
+public class File implements Serializable {
 
     /**
     * 对象存储主键自增
@@ -29,6 +31,30 @@ public class FileInfo implements Serializable {
     */
     private String originalName;
     /**
+     * md5
+     */
+    private String md5;
+    /**
+     * 分片大小
+     */
+    private Integer chunkSize;
+    /**
+     * 分片总数
+     */
+    private Integer chunkNum;
+    /**
+     * uploadId
+     */
+    private String uploadId;
+    /**
+     * bucket
+     */
+    private String bucket;
+    /**
+     * 文件mime类型
+     */
+    private String contentType;
+    /**
     * 文件后缀名
     */
     private String fileSuffix;
@@ -41,28 +67,24 @@ public class FileInfo implements Serializable {
     */
     private Date createTime;
     /**
-    * 上传人
-    */
-    private Long createBy;
-    /**
     * 更新时间
     */
     private Date updateTime;
-    /**
-    * 更新人
-    */
-    private Long updateBy;
     /**
     * 服务商(默认是minio)
     */
     private String service;
 
-    public FileInfo(String fileName, String originalName, String fileSuffix, String url, Long createBy, Long updateBy) {
+    /**
+     * 已上传的分片索引
+     */
+    @TableField(exist = false)
+    private List<Integer> uploadedChunks;
+
+    public File(String fileName, String originalName, String fileSuffix, String url) {
         this.fileName = fileName;
         this.originalName = originalName;
         this.fileSuffix = fileSuffix;
         this.url = url;
-        this.createBy = createBy;
-        this.updateBy = updateBy;
     }
 }

@@ -42,7 +42,9 @@ public class SwaggerConfig {
     private String externalDesc;
 
 
+    public static void main(String[] args) {
 
+    }
 
 
     @Bean
