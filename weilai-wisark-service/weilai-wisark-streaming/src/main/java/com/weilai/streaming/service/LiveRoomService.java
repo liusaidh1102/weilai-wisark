@@ -1,6 +1,8 @@
 package com.weilai.streaming.service;
 
+import com.weilai.common.response.Result;
 import com.weilai.model.streaming.dos.LiveRoom;
+import com.weilai.model.streaming.vos.LiveDetailVo;
 
 import java.util.List;
 
@@ -22,14 +24,14 @@ public interface LiveRoomService {
      * @param id 直播房间ID
      * @return 直播房间详情
      */
-    LiveRoom getLiveRoomById(Long id);
+    LiveDetailVo selectLiveRoomById(String id);
 
     /**
      * 添加直播房间
      *
      * @param liveRoom 直播房间信息
      */
-    void addLiveRoom(LiveRoom liveRoom);
+    Result<String> addLiveRoom(LiveRoom liveRoom);
 
     /**
      * 更新直播房间
@@ -43,5 +45,5 @@ public interface LiveRoomService {
      *
      * @param id 直播房间ID
      */
-    void deleteLiveRoom(Long id);
+    void deleteLiveRoom(String id);
 }
