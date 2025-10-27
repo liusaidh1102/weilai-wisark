@@ -1,0 +1,121 @@
+services:
+  gateway:
+    build:
+      context: ./weilai-wisark-gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - wisark-network
+    environment:
+      - JAVA_OPTS=-Xmx96m -Xms48m -XX:MaxMetaspaceSize=48m -XX:ReservedCodeCacheSize=24m
+
+  user:
+    build:
+      context: ./weilai-wisark-service/weilai-wisark-user
+      dockerfile: Dockerfile
+    container_name: user
+    restart: always
+    ports:
+      - "8118:8118"
+    networks:
+      - wisark-network
+    environment:
+      - JAVA_OPTS=-Xmx96m -Xms48m -XX:MaxMetaspaceSize=48m -XX:ReservedCodeCacheSize=24m
+
+  ai:
+    build:
+      context: ./weilai-wisark-service/weilai-wisark-ai
+      dockerfile: Dockerfile
+    container_name: ai
+    restart: always
+    ports:
+      - "8116:8116"
+    networks:
+      - wisark-network
+    environment:
+      - JAVA_OPTS=-Xmx256m -Xms128m -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=48m -XX:+UseSerialGC
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  file:
+    build:
+      context: ./weilai-wisark-service/weilai-wisark-file-starter
+      dockerfile: Dockerfile
+    container_name: file
+    restart: always
+    ports:
+      - "8111:8111"
+    networks:
+      - wisark-network
+    depends_on:
+      - sentinel
+    environment:
+      - JAVA_OPTS=-Xmx80m -Xms40m -XX:MaxMetaspaceSize=40m -XX:ReservedCodeCacheSize=20m
+
+  topic:
+    build:
+      context: ./weilai-wisark-service/weilai-wisark-topic
+      dockerfile: Dockerfile
+    container_name: topic
+    restart: always
+    ports:
+      - "8001:8001"
+    networks:
+      - wisark-network
+    environment:
+      - JAVA_OPTS=-Xmx96m -Xms48m -XX:MaxMetaspaceSize=48m -XX:ReservedCodeCacheSize=24m
+    deploy:
+      resources:
+        limits:
+          memory: 192M
+        reservations:
+          memory: 96M
+
+  stream:
+    build:
+      context: ./weilai-wisark-service/weilai-wisark-streaming
+      dockerfile: Dockerfile
+    container_name: stream
+    restart: always
+    ports:
+      - "8002:8002"
+    networks:
+      - wisark-network
+    environment:
+      - JAVA_OPTS=-Xmx96m -Xms48m -XX:MaxMetaspaceSize=48m -XX:ReservedCodeCacheSize=24m
+    deploy:
+      resources:
+        limits:
+          memory: 192M
+        reservations:
+          memory: 96M
+
+  sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sentinel
+    restart: always
+    ports:
+      - "8090:8090"
+    networks:
+      - wisark-network
+    environment:
+      - JAVA_OPTS=-Xmx48m -Xms24m -XX:MaxMetaspaceSize=24m -XX:ReservedCodeCacheSize=12m
+    deploy:
+      resources:
+        limits:
+          memory: 96M
+        reservations:
+          memory: 48M
+
+networks:
+  wisark-network:
+    driver: bridge

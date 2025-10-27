@@ -282,12 +282,15 @@
 
     <build>
         <plugins>
+        <!--  将 lib 一起打包进去，可以通过  java -jar 直接运行 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+
+
 
 
 </project>
