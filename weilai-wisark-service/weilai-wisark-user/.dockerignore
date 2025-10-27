@@ -1,0 +1,16 @@
+# 忽略除target目录外的所有文件
+*
+!target/
+# 但排除JAR文件以外的其他文件
+target/*
+!target/*.jar
+.git/
+.gitignore
+README.md
+*.md
+.DS_Store
+Thumbs.db
+*.log
+logs/
+temp/
+node_modules/

@@ -1,13 +1,6 @@
 package com.weilai.common.utils;
-
-import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import edu.stanford.nlp.pipeline.Annotation;
-
-import java.util.Properties;
-
 @Component
 @Slf4j
 public class AiUtil {
@@ -36,45 +29,45 @@ public class AiUtil {
     }
 
 
-    /**
-     * 基于NLP提取关键词生成标题
-     * @param content 用户提问内容
-     * @return 生成的标题
-     */
-    public String generateTitleFromContent(String content) {
-        try {
-            // 配置CoreNLP管道
-            Properties props = new Properties();
-            props.setProperty("annotators", "tokenize, ssplit, pos, lemma");
-            StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-
-            // 处理文本
-            Annotation document = new Annotation(content);
-            pipeline.annotate(document);
-
-            // 提取关键名词和动词作为标题关键词
-            StringBuilder titleBuilder = new StringBuilder();
-            document.get(CoreAnnotations.TokensAnnotation.class).stream()
-                    .filter(token -> {
-                        String pos = token.get(CoreAnnotations.PartOfSpeechAnnotation.class);
-                        // 提取名词(NN*)和动词(VB*)作为关键词
-                        return pos.startsWith("NN") || pos.startsWith("VB");
-                    })
-                    .limit(5) // 限制关键词数量
-                    .forEach(token -> {
-                        if (!titleBuilder.isEmpty()) titleBuilder.append(" ");
-                        titleBuilder.append(token.get(CoreAnnotations.TextAnnotation.class));
-                    });
-
-            String title = titleBuilder.toString();
-            // 限制标题长度
-            return title.length() > 20 ? title.substring(0, 20) + "..." : title;
-        } catch (Exception e) {
-            log.warn("标题生成失败，使用默认方式: {}", e.getMessage());
-            // 备用方案：直接截取内容
-            return content.length() > 15 ? content.substring(0, 15) + "..." : content;
-        }
-    }
+//    /**
+//     * 基于NLP提取关键词生成标题
+//     * @param content 用户提问内容
+//     * @return 生成的标题
+//     */
+//    public String generateTitleFromContent(String content) {
+//        try {
+//            // 配置CoreNLP管道
+//            Properties props = new Properties();
+//            props.setProperty("annotators", "tokenize, ssplit, pos, lemma");
+//            StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+//
+//            // 处理文本
+//            Annotation document = new Annotation(content);
+//            pipeline.annotate(document);
+//
+//            // 提取关键名词和动词作为标题关键词
+//            StringBuilder titleBuilder = new StringBuilder();
+//            document.get(CoreAnnotations.TokensAnnotation.class).stream()
+//                    .filter(token -> {
+//                        String pos = token.get(CoreAnnotations.PartOfSpeechAnnotation.class);
+//                        // 提取名词(NN*)和动词(VB*)作为关键词
+//                        return pos.startsWith("NN") || pos.startsWith("VB");
+//                    })
+//                    .limit(5) // 限制关键词数量
+//                    .forEach(token -> {
+//                        if (!titleBuilder.isEmpty()) titleBuilder.append(" ");
+//                        titleBuilder.append(token.get(CoreAnnotations.TextAnnotation.class));
+//                    });
+//
+//            String title = titleBuilder.toString();
+//            // 限制标题长度
+//            return title.length() > 20 ? title.substring(0, 20) + "..." : title;
+//        } catch (Exception e) {
+//            log.warn("标题生成失败，使用默认方式: {}", e.getMessage());
+//            // 备用方案：直接截取内容
+//            return content.length() > 15 ? content.substring(0, 15) + "..." : content;
+//        }
+//    }
 
 
 

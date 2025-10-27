@@ -79,28 +79,28 @@
         </dependency>
 
 
-        <!--标题生成 核心库 -->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.4</version>
-        </dependency>
+<!--        &lt;!&ndash;标题生成 核心库 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>edu.stanford.nlp</groupId>-->
+<!--            <artifactId>stanford-corenlp</artifactId>-->
+<!--            <version>4.5.4</version>-->
+<!--        </dependency>-->
 
-        <!-- 英文模型（如果处理英文文本） -->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.4</version>
-            <classifier>models</classifier>
-        </dependency>
+<!--        &lt;!&ndash; 英文模型（如果处理英文文本） &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>edu.stanford.nlp</groupId>-->
+<!--            <artifactId>stanford-corenlp</artifactId>-->
+<!--            <version>4.5.4</version>-->
+<!--            <classifier>models</classifier>-->
+<!--        </dependency>-->
 
-        <!-- 中文模型（如果处理中文文本） -->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.4</version>
-            <classifier>models-chinese</classifier>
-        </dependency>
+<!--        &lt;!&ndash; 中文模型（如果处理中文文本） &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>edu.stanford.nlp</groupId>-->
+<!--            <artifactId>stanford-corenlp</artifactId>-->
+<!--            <version>4.5.4</version>-->
+<!--            <classifier>models-chinese</classifier>-->
+<!--        </dependency>-->
 
         <!--  redisson依赖      -->
         <dependency>

@@ -2,6 +2,9 @@ server:
   # 前端请求8080
   port: 8080
 spring:
+  application:
+    # 该name属性和值，必须与nacos中配置的Data ID一致
+    name: weilai-wisark-gateway
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

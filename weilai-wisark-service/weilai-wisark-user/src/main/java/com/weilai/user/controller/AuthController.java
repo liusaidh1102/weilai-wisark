@@ -232,5 +232,4 @@ public class AuthController {
         StpUtil.logout();
         return Result.ok();
     }
-
 }

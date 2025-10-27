@@ -1,21 +1,16 @@
 # 使用官方 OpenJDK 17 镜像作为基础镜像
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-ea-slim
 
 MAINTAINER wlgzs
 
 # 设置容器内的工作目录
 WORKDIR /ai
 
-# 将当前目录下的 jar 文件拷贝到容器内的 /app 目录下
-# 假设你的 jar 文件名为 weilai-wisark-gateway-1.0-SNAPAHOT.jar
-COPY ./weilai-wisark-ai-1.0-SNAPSHOT.jar ./app.jar
+# 将当前目录下的 jar 文件拷贝到容器内的工作目录下
+COPY ./target/weilai-wisark-ai-1.0-SNAPSHOT.jar ./app.jar
 
-# 暴露容器的 8080 端口
+# 暴露容器的端口
 EXPOSE 8116
 
 # 设置容器启动时运行的命令
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
-
-
-#docker run -d --name ai -p 8116:8116 -v /home/lzw/wisark/ai/weilai-wisark-ai-1.0-SNAPSHOT.jar:/ai/app.jar ai
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

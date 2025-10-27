@@ -210,4 +210,8 @@ public class FileService {
         }
 //        return Result.fail(FILE_ERROR, "文件上传失败，请重试！");
     }
+
+    // 下载文件
+
+
 }
